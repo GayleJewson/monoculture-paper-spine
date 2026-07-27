@@ -3,6 +3,10 @@ status: DRAFT — Lyra, 2026-07-26, staging for three-leg joint paper
 section: The $\Omega_{\mathrm{blind}}$ subsection (Leg 3 — operational e-value SLA)
 ---
 
+> **Supermartingale (additive):** running sum S_t=Σ X_s; under H₀ its expected increment ≤0, but it is not itself an anytime-valid test.
+> **E-process (test supermartingale):** the multiplicative wealth process E_{ij,t}=∏(1+λX_s), init 1, nonneg; the anytime-valid object Ville's inequality applies to at any stopping time.
+> **E-value:** the value of an e-process at a fixed/stopping time; an average of e-values is an e-value, an average of e-processes is an e-process.
+
 # The blind spot: $\Omega_{\mathrm{blind}}$
 
 **A naming guard, stated before any mathematics.** The apparatus below shares its
@@ -16,7 +20,7 @@ component plus that atom. That is the same *phenomenon* in two *formalisms*,
 and the two numbers are **not interchangeable**. Han's $r_k$ is a *batch*
 reliability-after-$k$-checks quantity — the probability that a serial verifier
 cascade has caught the error after $k$ gates. Ours is a *streaming, per-pair
-co-failure rate* monitored by a supermartingale, an anytime-valid object that
+co-failure rate* monitored by an e-process — a nonnegative test supermartingale — that
 prices the ongoing rate at which a *pair* of judges fails together. Same latent
 atom, different estimand: one is a survivor probability after a fixed number of
 serial stages, the other is a rate under continuous parallel monitoring. Plugging
@@ -32,7 +36,7 @@ failure of that cascade decaying only polynomially,
 $$1 - r_k \;\asymp\; k^{-b},$$
 where $b$ is the upper-tail exponent of the batch mixing law. This is Han's
 result about the batch/serial object, not a statement about the streaming
-per-pair supermartingale. Whether the streaming per-pair supermartingale's
+per-pair e-process. Whether the streaming per-pair e-process's
 residual inherits the same exponent $b$ — rather than a different function of
 the mixture shaped by continuous monitoring rather than discrete serial gates —
 is an open serial-to-parallel transfer question, flagged for two independent
@@ -104,7 +108,7 @@ not as a lemma we may cite for our own numbers. Second, on novelty:
 anytime-valid e-processes for LLM-*judge* monitoring already exist — Li,
 "Who Drifted?" (arXiv 2606.15474) builds exactly such an e-process. But their
 estimand is the *temporal drift of a single judge* against a human anchor. Ours
-is a different estimand: a *per-pair* supermartingale monitoring correlated
+is a different estimand: a *per-pair* e-process monitoring correlated
 *co-failure across a pair of judges*, with a cohomological weighting by an $H^1$
 class developed in the Leg-3 body ⟦Leg 3 §⟧. The honest sentence is therefore:
 e-processes for judge-monitoring exist (Li, 2026); our contribution is the
@@ -114,10 +118,10 @@ obstruction class — the weighting is defined in §[Leg 3], not here. We claim 
 estimand and its cohomological framing; we do not claim the anytime-valid
 apparatus underneath it.
 
-⟦GAP: the $H^1$-weighting of the per-pair supermartingale is referenced here as
+⟦GAP: the $H^1$-weighting of the per-pair e-process is referenced here as
 the novelty but not defined in this subsection. It needs either a one-line
 forward-reference to where the weighting is specified (how a Leg-2 $H^1$ class
-enters the Leg-3 e-value's weight), or an explicit "defined in §X" pointer. As
+enters the Leg-3 e-process's weight), or an explicit "defined in §X" pointer. As
 written I assert the weighting exists without saying what it is.⟧
 
 ⟦GAP: "supermartingale" vs "e-process / e-value" — I have used all three. Confirm
