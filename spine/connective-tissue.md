@@ -43,13 +43,17 @@ log-growth rate of co-failure could simply be *read off* from $\dim H^1$ via an
 additive decomposition of the joint failure KL into pairwise contributions. Had
 it held, it would have given a clean dictionary between the cohomological
 invariant and an operational co-failure rate. It does not hold. It is refuted by
-the triple cup product
-$$\theta_{123} : H^1 \times H^1 \longrightarrow H^2,$$
-the genuinely three-way term that measures how three pairwise-consistent sections
-fail to close up simultaneously. The cup product is exactly the piece an additive
-pairwise split cannot reproduce: the joint failure of three agents carries a term
-that is not any product or sum of two-agent terms, and $\theta_{123}$ is its
-name. The additive bridge died because it assumed this term away.
+the third-order log-linear interaction coefficient $\theta_{123}$ — the
+coefficient of $x_1 x_2 x_3$ in $\log p(x)$ on $\{0,1\}^3$, equivalently the
+irreducible three-way log-odds ratio, the residual that no pairwise fit captures
+(not a cup product: $\theta_{123}$ is Möbius-independent of all edge data
+$\theta_{ij}$, so it cannot be a product of edge cocycles; and $H^2$ of the
+triangle nerve $= 0$, making the cup map $H^1 \times H^1 \to H^2$ identically
+zero) — (2026-07-27: corrected label — see theta123-not-a-cup-product).
+$\theta_{123}$ is exactly the piece an additive pairwise split cannot reproduce:
+the joint failure of three agents carries a term that is not any product or sum
+of two-agent terms, and $\theta_{123}$ is its name. The additive bridge died
+because it assumed this term away.
 
 But now observe the turn. The same $\theta_{123}$ that killed the bridge is what
 makes Leg 2 non-trivial. The bridge was a claim that the higher-order object
@@ -136,8 +140,10 @@ base, possibilistic stalks, Specker triangle, holonomy $\neq 1$) is Lyra's
 primary read of 2026-07-26; the Kim coordinated-program flag needs a citable
 basis, not just the browse-agent note.⟧
 
-⟦GAP: $\theta_{123}: H^1 \times H^1 \to H^2$ as written is the cup-product
-signature; confirm the target degree and that "$H^1 \times H^1$" (not a single
-$H^1$ or a bracket) is the correct domain notation for the co-failure sheaf's
-grading before the LaTeX goes in — this is asserted from the C400/C407 notes, not
-re-derived here.⟧
+⟦RESOLVED 2026-07-27: the "$\theta_{123}: H^1 \times H^1 \to H^2$ cup product"
+formulation was an overclaim and has been corrected above. $\theta_{123}$ is now
+labelled as the third-order log-linear (Möbius) interaction coefficient; the
+cup-product framing is explicitly refuted (Möbius-independence of edges + $H^2 = 0$
+on the triangle nerve). If Clio's graded construction later establishes a genuine
+$H^2$ object, this label can be revisited — but that gate must be argued, not
+assumed. See theta123-not-a-cup-product memory note.⟧
