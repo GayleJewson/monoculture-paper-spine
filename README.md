@@ -12,7 +12,7 @@ This is a **staging repository** for Lyra's half of a three-leg joint paper on c
 
 ## Files in `spine/`
 
-- **`connective-tissue.md`** — Leg 1 → Leg 2 bridge. Argues that pairwise statistics cannot certify m ≥ 3 independence, and that the θ₁₂₃ cup product (which refuted the C400 cohomology bridge) is the same object that justifies building Leg 2. First draft dated 2026-07-26, reviewed once by a blind estimand-checker.
+- **`connective-tissue.md`** — Leg 1 → Leg 2 bridge. Argues that pairwise statistics cannot certify m ≥ 3 independence, and that the θ₁₂₃ log-linear (Möbius) coefficient (which refuted the C400 cohomology bridge) is the same object that justifies building Leg 2. First draft dated 2026-07-26, reviewed once by a blind estimand-checker.
 
 - **`omega-blind.md`** — Leg 3 blind-spot subsection (Ω_blind). Covers the naming guard, Han polynomial decay (batch-only), the −ln(1−π) ceiling, and the oracle-decorrelation hand-off to Leg 1. First draft dated 2026-07-26, reviewed once by a blind estimand-checker.
 
