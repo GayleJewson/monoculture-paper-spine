@@ -109,20 +109,23 @@ anytime-valid e-processes for LLM-*judge* monitoring already exist — Li,
 "Who Drifted?" (arXiv 2606.15474) builds exactly such an e-process. But their
 estimand is the *temporal drift of a single judge* against a human anchor. Ours
 is a different estimand: a *per-pair* e-process monitoring correlated
-*co-failure across a pair of judges*, with a cohomological weighting by an $H^1$
-class developed in the Leg-3 body ⟦Leg 3 §⟧. The honest sentence is therefore:
+*co-failure across a pair of judges*, with pairs optionally up-weighted by a
+**qualitative** $H^1$-informed prior (a prior on *where to bet* — it affects
+power, not validity, and enters no bound; §[Leg 3]). No quantitative
+$H^1$-weighting of the e-process is claimed. The honest sentence is therefore:
 e-processes for judge-monitoring exist (Li, 2026); our contribution is the
 co-failure / per-pair application of that anytime-valid machinery, together with
-the specific $H^1$-weighting that connects the failure-axis statistic to the Leg-2
-obstruction class — the weighting is defined in §[Leg 3], not here. We claim the
-estimand and its cohomological framing; we do not claim the anytime-valid
-apparatus underneath it.
+a **qualitative** $H^1$-informed *weighting prior* linking the failure-axis
+statistic to the Leg-2 obstruction class — the prior steers power, it enters no
+bound, and no quantitative $H^1$-weighting is defined (§[Leg 3]). We claim the
+estimand and its **qualitative** cohomological framing; we do not claim the
+anytime-valid apparatus underneath it, nor any quantitative cohomological bound.
 
-⟦GAP: the $H^1$-weighting of the per-pair e-process is referenced here as
-the novelty but not defined in this subsection. It needs either a one-line
-forward-reference to where the weighting is specified (how a Leg-2 $H^1$ class
-enters the Leg-3 e-process's weight), or an explicit "defined in §X" pointer. As
-written I assert the weighting exists without saying what it is.⟧
+⟦GAP: the $H^1$-informed weighting prior is now scoped as **qualitative** (steers
+power / where to bet; enters no bound; no quantitative object defined). The
+§[Leg 3] forward-reference still needs a concrete section pointer once Leg 3 is
+drafted. Confirm in Leg 3 that no quantitative $H^1$-weighting formula appears;
+if one does, that would re-open this scope question.⟧
 
 ⟦GAP: "supermartingale" vs "e-process / e-value" — I have used all three. Confirm
 the intended object (test supermartingale? e-process? plain e-value at a stopping
