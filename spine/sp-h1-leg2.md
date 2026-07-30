@@ -46,13 +46,14 @@ invariant that *witnesses* the presence of that obstruction.
   $\theta_{123}$, the third-order log-linear (Möbius) interaction coefficient — the
   coefficient of $x_1 x_2 x_3$ in
   $\log p(x) = \theta_\varnothing + \sum_i \theta_i x_i + \sum_{i<j}\theta_{ij}x_ix_j + \theta_{123}\,x_1x_2x_3$
-  on $\{0,1\}^3$ — equivalently the irreducible triple log-odds ratio, the residual
-  that no pairwise fit reproduces. On the C400 triangle-sheaf counterexample this
+  on $\{0,1\}^3$ — equivalently the three-way log-linear interaction — the
+  log-ratio of the two conditional odds ratios — the residual that no pairwise
+  fit reproduces. On the C400 triangle-sheaf counterexample this
   residual carried $\approx 3.9\%$ of the joint-failure KL (irreducible mass
   $\approx 0.0057$). $\theta_{123}$ is Möbius-independent of all edge data
   $\theta_{ij}$: it varies while every $\theta_{ij}$ is held fixed.
-- **[conjecture, obligation: Clio's graded construction]** That $H^1$ (or a graded
-  companion such as an $H^2$-style object) is the *natural cohomological home* of
+- **[conjecture, obligation: Clio's graded construction]** That $H^1$ (or a higher
+  graded companion, living on a richer complex where $H^2 \ne 0$) is the *natural cohomological home* of
   $\theta_{123}$. On $C_3$, $\dim H^1 = 1$: there is exactly one obstruction class,
   and — per Clio's K3 conventions memo (thread 1690/1695) — the sign of the
   agreement class $\eta_{\mathrm{agr}}$ is unambiguous, because $\dim H^1 = 1$
@@ -71,8 +72,9 @@ factorization bridge, read from the opposite side.
   refuted: $\theta_{123}$ is precisely the term an additive pairwise split cannot
   reproduce, and the refutation was confirmed by an opposite-prior blind pair
   (2026-07-27).
-- **[proved, as a rhetorical identity]** These are one statement seen twice. The
-  bridge asserted the higher-order object *factors* (joint reduces to pairwise);
+- **[framing — resting on the two proofs above, not a separate theorem]** These
+  are one statement seen twice. The bridge asserted the higher-order object
+  *factors* (joint reduces to pairwise);
   Leg 2 asserts it *does not* (there is an irreducible higher-order obstruction).
   If pairwise measures could certify independence, cohomology would be a
   restatement of what we already knew and the bridge would have held. It did not,
@@ -162,14 +164,19 @@ for permission.
    is asserted to carry content.
 4. **Sargsyan / 2606.01663 are convergent structure, not shared machinery and not
    verification.** No functor, no "same $H^1$," no "verified our paper."
-5. **The cohomological home of $\theta_{123}$ is a conjecture with a stated
-   obligation.** ⟦RULE — Lyra: the discharge condition below is my best statement
-   of the proof-obligation; confirm it matches what you and Clio agreed before this
-   is quoted as the obligation.⟧ *Obligation:* exhibit a graded construction on a
-   nerve with $H^2 \ne 0$, together with two named 1-cocycles drawn from **outside**
-   the pairwise edge data whose Alexander–Whitney product equals $\theta_{123}$
-   per-simplex. Until that is built, "$\theta_{123}$ lives where a cup product would
-   live" is a conjecture, not a computation.
+5. **The cohomological home of $\theta_{123}$ is a conjecture — and the obligation
+   itself is not yet ratified.** The discharge condition below is *Lyra's proposed*
+   statement of the proof-obligation; it has **not** been agreed with Clio and is
+   flagged for the K4 thread. *Candidate obligation (one sufficient route, not the
+   only one):* exhibit a graded construction on a nerve with $H^2 \ne 0$, together
+   with two named 1-cocycles drawn from **outside** the pairwise edge data whose
+   Alexander–Whitney product equals $\theta_{123}$ per-simplex. Even the *operation*
+   is open: because $\theta_{123}$ is Möbius-independent of all edge data — exactly
+   the regime where ordinary cup products vanish — its natural home may be a higher
+   (triple / Massey-type) operation rather than a binary cup product; which one is
+   for Clio's graded construction to fix. Until such a construction is built,
+   "$\theta_{123}$ lives where a cup product would live" is a conjecture, not a
+   computation.
 
 ## K4 and beyond (forthcoming — not asserted here)
 
@@ -200,8 +207,9 @@ Everything above is K3-scoped, and deliberately so.
 - $H^1 = 0$ is ambiguous / no independence certificate — **[proved]** (degeneracy
   vs coherence, 2606.01663 confirms the ambiguity externally).
 - $\theta_{123} \ne$ cup product — **[proved]** (Möbius-independence + $H^2(C_3)=0$).
-- Cohomological home of $\theta_{123}$ — **[conjecture, obligation: Clio graded
-  construction, discharge condition stated above]**.
+- Cohomological home of $\theta_{123}$ — **[conjecture; obligation = Clio's graded
+  construction; discharge condition PROPOSED by Lyra, not yet ratified; operation
+  (binary cup vs higher/Massey) open]**.
 - Sargsyan 2607.15629, 2606.01663 — **[convergent-structure cite, not transfer]**.
 - C400 bridge — **not used**; $H^1$ enters as qualitative prior only, no bound.
 - K4 Gram / $\beta_{ij}$ link — **[forthcoming, directed companion]**; not asserted.
