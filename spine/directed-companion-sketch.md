@@ -174,6 +174,98 @@ And it does not license any threshold statement about $\rho(\Gamma)$ itself:
 $\rho(\Gamma) < 1$ as a cascade gate for the signed system remains an analogy
 until a signed-process criticality theorem is supplied.
 
+## The Monotone-Majorant Containment Lemma
+
+> ⟦DRAFT — co-lock w/ Claudius, not verified⟧
+> The following is a *proposed* named statement of the gate above, promoted to
+> lemma form so the proof obligations are pinned in one place. Nothing in this
+> block is claimed as proved. The proof sketch (c) and — above all — the open
+> obligation (d) are owed jointly with Claudius before this may be cited as a
+> theorem. It is written to be *consistent with* the weak joints §, not to
+> supersede them: where they hedge, this lemma inherits the hedge.
+
+**Lemma (Monotone-Majorant Containment).**
+Let $\Gamma = \Gamma^+ - \Gamma^-$ be the signed conditional-excess co-failure
+matrix on a panel of $m$ agents, with $\Gamma^+, \Gamma^- \ge 0$ entrywise (the
+excitatory and inhibitory parts of §"Restoring Perron–Frobenius"). Suppose a
+propagation dynamics $\{X_t\}_{t \ge 0}$ on nonnegative co-failure-mass vectors is
+posited such that:
+
+1. *(Branching interpretation.)* $\Gamma^+$ is the mean-offspring matrix of the
+   multitype Galton–Watson process $\{Y_t\}$ obtained by retaining only the
+   excitatory couplings — i.e. $\mathbb{E}[Y_{t+1} \mid Y_t] = \Gamma^+ Y_t$; and
+2. *(Absorptive, not redirective, inhibition.)* $\Gamma^-$ acts on $\{X_t\}$ only
+   as a mass-**removing** channel — suppression deletes lineage mass, it does not
+   reroute or reflect it — so that the update is **monotone** and the excitatory
+   process dominates the true signed process pathwise:
+   $\;X_t \le Y_t\;$ (entrywise) for all $t$, under the natural coupling with
+   $X_0 = Y_0$.
+
+Then
+$$
+\boxed{\;\rho(\Gamma^+) < 1 \;\Longrightarrow\; \text{the co-failure cascade of the full signed system } \{X_t\} \text{ is contained (extinguishes a.s.).}\;}
+$$
+The hypothesis is a **Perron root** condition on the nonnegative $\Gamma^+$ (P–F
+licensed); the conclusion is containment of the *signed* cascade, and holds **only
+under the posited monotone / absorptive regime** — it is not a statement about
+$\Gamma$'s spectrum. The condition is **sufficient, not necessary**, and
+conservative: it certifies by switching every inhibitory link off.
+
+**(b) Why this is not a spectral inequality.**
+The lemma is emphatically *not* derived from any eigenvalue comparison between
+$\Gamma$ and $\Gamma^+$. By Wielandt's bound both radii are dominated by the same
+nonnegative envelope, $\rho(\Gamma) \le \rho(|\Gamma|)$ **and**
+$\rho(\Gamma^+) \le \rho(|\Gamma|)$, and *neither controls the other*: one cannot
+conclude $\rho(\Gamma) < 1$ from $\rho(\Gamma^+) < 1$, nor vice versa. In
+particular $\Gamma$ is signed, so it has no Perron–Frobenius structure and
+$\rho(\Gamma)$ is a bare **spectral radius**, entitled to none of the guarantees
+(real positive dominant eigenvalue, nonnegative eigenvector) that make the
+$\Gamma^+$ criticality argument work. The containment result therefore lives at
+the level of the **dynamics** — a pathwise majorant between two processes — and
+*not* at the level of eigenvalues. Any attempt to restate it as
+"$\rho(\Gamma^+) < 1 \Rightarrow \rho(\Gamma) < 1$" is exactly the borrowed-guarantee
+error this companion is on guard against.
+
+**(c) Proof sketch (majorant / coupling argument).**
+Construct the auxiliary multitype Galton–Watson process $\{Y_t\}$ with
+mean-offspring matrix $\Gamma^+ \ge 0$: each unit of co-failure mass at agent $i$
+produces, in expectation, $\Gamma^+_{ij}$ units at $j$ in the next generation,
+with *no* inhibitory bookkeeping. Since $\Gamma^+$ is nonnegative, Perron–Frobenius
+applies and the classical Galton–Watson criticality dichotomy holds *exactly*:
+$\rho(\Gamma^+) < 1$ makes $\{Y_t\}$ subcritical, hence
+$\mathbb{E}[\mathbf{1}^\top Y_t] = \mathbf{1}^\top (\Gamma^+)^t Y_0 \to 0$
+geometrically and $Y_t \to 0$ a.s. (extinction). Under hypotheses (1)–(2), couple
+$\{X_t\}$ and $\{Y_t\}$ on a common probability space with $X_0 = Y_0$: at each
+step the signed update produces the same excitatory offspring as $Y$ but *removes*
+additional mass through the absorptive $\Gamma^-$ channel (never adds), so
+monotonicity of the update propagates $X_t \le Y_t$ entrywise for all $t$ by
+induction. Squeezing, $0 \le X_t \le Y_t \to 0$ gives $X_t \to 0$ a.s.: the true
+signed cascade is contained whenever its excitatory majorant is subcritical. $\;\square$
+*(sketch — the induction step in (2) is where the regime does the real work, and
+where obligation (d) below is discharged or fails.)*
+
+**(d) Open proof obligation — "$\Gamma^-$ genuinely contains."**
+The sketch *assumes* that inhibition is purely absorptive — that $\Gamma^-$ can
+only subtract mass, so the coupling $X_t \le Y_t$ is preserved. This is **not**
+free, and it is the load-bearing gap this lemma still owes. Negative feedback in a
+monotone dynamical system can be subtle: a suppressive link that removes mass at
+one node can, through the network, *relieve* competition elsewhere and so
+indirectly permit growth — i.e. an inhibitory coupling need not be globally
+stabilising even when it is locally mass-removing. The obligation, stated
+explicitly and flagged as owed:
+
+> **Obligation (Γ⁻-containment).** Exhibit a class of propagation dynamics under
+> which $\Gamma^-$ acts as a strictly absorptive (mass-removing, non-redirective)
+> channel *and* prove that within this class the pathwise domination $X_t \le Y_t$
+> holds for all $t$ — i.e. that absorptive negative coupling cannot destabilise
+> the signed process relative to its $\Gamma^+$ majorant. Until this is
+> discharged, hypothesis (2) is a **posited property of the dynamics, not a
+> theorem**, and the Lemma is conditional on it.
+
+This obligation is to be verified **jointly with Claudius**. Do not cite the
+Lemma as established, and do not weaken any weak joint on the strength of it,
+until obligation (Γ⁻-containment) is discharged.
+
 ## The asymmetric star, worked concretely
 
 Make the whole apparatus concrete on the topology C387 already ran: an
