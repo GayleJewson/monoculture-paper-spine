@@ -129,7 +129,19 @@ for $\Gamma$.
 With $\Gamma^+$ nonnegative, its Perron root acquires an *exact* — not
 analogical — interpretation, provided we first posit a propagation dynamics (see
 the weak joints below; the dynamics is a modeling choice, not something the matrix
-hands us). Read $\Gamma^+_{ij}$ as the expected number of "offspring" failures it
+hands us). The modeling commitment that makes the containment lemma go through is a
+specific one, and worth stating plainly: we model inhibition as the **killing of
+individual failure events / lineages** (a *thinning* of the branching population),
+not as **continuous subtraction from a shared medium**. In the thinning model the
+co-failure mass is a nonnegative *count* of surviving lineages and $\Gamma^-$ can
+only remove members of that count, so the majorant coupling $X_t \le Y_t$ holds by
+construction; in the continuous-medium model $\{X_t\}$ obeys a linear update
+$X_{t+1} = \Gamma^+ X_t - \Gamma^- X_t$ in which a component can be driven negative,
+whereupon the $-\Gamma^- X_t$ term flips sign and *re-adds* mass, breaking the
+majorant. The two models agree on the mean but not on the pathwise domination the
+lemma needs — which is why hypothesis (2) below is a modeling commitment to the
+thinning realization, not a free consequence of the definition of $\Gamma$.
+Read $\Gamma^+_{ij}$ as the expected number of "offspring" failures it
 induces at $j$ per failure at $i$ — a multitype branching (Galton–Watson) process
 whose mean-offspring matrix is $\Gamma^+$. For such a process the classical
 criticality dichotomy is a theorem, not a metaphor:
@@ -176,13 +188,18 @@ until a signed-process criticality theorem is supplied.
 
 ## The Monotone-Majorant Containment Lemma
 
-> ⟦DRAFT — co-lock w/ Claudius, not verified⟧
-> The following is a *proposed* named statement of the gate above, promoted to
-> lemma form so the proof obligations are pinned in one place. Nothing in this
-> block is claimed as proved. The proof sketch (c) and — above all — the open
-> obligation (d) are owed jointly with Claudius before this may be cited as a
-> theorem. It is written to be *consistent with* the weak joints §, not to
-> supersede them: where they hedge, this lemma inherits the hedge.
+> ⟦DRAFT — co-lock w/ Claudius; obligation (d) discharged, dynamics-positing still open⟧
+> The following is a named statement of the gate above, promoted to lemma form so
+> the proof obligations are pinned in one place. Obligation (d) — the load-bearing
+> "$\Gamma^-$ genuinely contains" gap — is now **discharged** (co-confirmed with
+> Claudius): the lemma is a **theorem under the thinning realization** of
+> $\Gamma^-$, and *fails* under continuous linear subtraction, so hypothesis (2) is
+> pinned to the thinning regime. What remains open is weak joint 3 (positing the
+> propagation dynamics explicitly) and the C387 transfer gate; the containment
+> result is a **dynamical majorant under the thinning hypothesis, not a spectral
+> theorem for general signed $\Gamma$**. It is written to be *consistent with* the
+> weak joints §, not to supersede them: where they hedge, this lemma inherits the
+> hedge.
 
 **Lemma (Monotone-Majorant Containment).**
 Let $\Gamma = \Gamma^+ - \Gamma^-$ be the signed conditional-excess co-failure
@@ -194,12 +211,14 @@ posited such that:
 1. *(Branching interpretation.)* $\Gamma^+$ is the mean-offspring matrix of the
    multitype Galton–Watson process $\{Y_t\}$ obtained by retaining only the
    excitatory couplings — i.e. $\mathbb{E}[Y_{t+1} \mid Y_t] = \Gamma^+ Y_t$; and
-2. *(Absorptive, not redirective, inhibition.)* $\Gamma^-$ acts on $\{X_t\}$ only
-   as a mass-**removing** channel — suppression deletes lineage mass, it does not
-   reroute or reflect it — so that the update is **monotone** and the excitatory
-   process dominates the true signed process pathwise:
-   $\;X_t \le Y_t\;$ (entrywise) for all $t$, under the natural coupling with
-   $X_0 = Y_0$.
+2. *(Nonnegativity-preserving inhibition — the thinning realization.)*
+   $\Gamma^-$ is nonnegativity-preserving: inhibition operates as sub-individual
+   killing (inhibition probability $\le 1$ per unit), so mass counts cannot go
+   negative by construction. Under this thinning realization suppression deletes
+   lineage mass, it does not reroute, reflect, or over-subtract it — so the update
+   is **monotone** and the excitatory process dominates the true signed process
+   pathwise: $\;X_t \le Y_t\;$ (entrywise) for all $t$, under the natural coupling
+   with $X_0 = Y_0$.
 
 Then
 $$
@@ -244,10 +263,19 @@ signed cascade is contained whenever its excitatory majorant is subcritical. $\;
 *(sketch — the induction step in (2) is where the regime does the real work, and
 where obligation (d) below is discharged or fails.)*
 
-**(d) Open proof obligation — "$\Gamma^-$ genuinely contains."**
+**(d) Proof obligation — "$\Gamma^-$ genuinely contains" — DISCHARGED.**
+*Discharged (co-confirmed with Claudius): the lemma is a **theorem** under the
+thinning realization of $\Gamma^-$ (sub-individual killing; counts stay $\ge 0$;
+pathwise coupling $X_t \le Y_t$ holds by construction). It **fails** under
+continuous linear subtraction ($X_{t+1} = \Gamma^+ X_t - \Gamma^- X_t$), where a
+component can go negative and $-\Gamma^- X_t$ re-adds mass, breaking the majorant.
+Claudius confirmed his intended "genealogical mass flow" IS the thinning
+realization, and his own attempt to build a counterexample under thinning failed;
+hypothesis (2) is now pinned to the thinning regime accordingly.*
+
 The sketch *assumes* that inhibition is purely absorptive — that $\Gamma^-$ can
 only subtract mass, so the coupling $X_t \le Y_t$ is preserved. This is **not**
-free, and it is the load-bearing gap this lemma still owes. Negative feedback in a
+free, and it is the load-bearing gap this lemma once owed. Negative feedback in a
 monotone dynamical system can be subtle: a suppressive link that removes mass at
 one node can, through the network, *relieve* competition elsewhere and so
 indirectly permit growth — i.e. an inhibitory coupling need not be globally
@@ -258,13 +286,20 @@ explicitly and flagged as owed:
 > which $\Gamma^-$ acts as a strictly absorptive (mass-removing, non-redirective)
 > channel *and* prove that within this class the pathwise domination $X_t \le Y_t$
 > holds for all $t$ — i.e. that absorptive negative coupling cannot destabilise
-> the signed process relative to its $\Gamma^+$ majorant. Until this is
-> discharged, hypothesis (2) is a **posited property of the dynamics, not a
-> theorem**, and the Lemma is conditional on it.
+> the signed process relative to its $\Gamma^+$ majorant.
 
-This obligation is to be verified **jointly with Claudius**. Do not cite the
-Lemma as established, and do not weaken any weak joint on the strength of it,
-until obligation (Γ⁻-containment) is discharged.
+*Resolution.* The class is the **thinning realization**: $\Gamma^-$ is
+nonnegativity-preserving, acting as sub-individual killing (inhibition probability
+$\le 1$ per unit), so the co-failure mass is a nonnegative count and suppression
+can only delete members of it. Within this class the coupling $X_t \le Y_t$ holds
+by construction (each step removes mass from $X$ relative to $Y$, never adds), so
+the majorant survives and the Lemma is a theorem. The obligation therefore
+**pins hypothesis (2) to the thinning regime** rather than leaving it a free
+posit: the continuous-medium alternative, in which $\Gamma^-$ subtracts linearly
+and a component may go negative, is exactly the class in which the domination
+fails, and it is excluded by hypothesis (2). This resolution was **co-confirmed
+with Claudius**, whose intended "genealogical mass flow" is the thinning
+realization and whose own attempt at a thinning counterexample failed.
 
 ## The asymmetric star, worked concretely
 
