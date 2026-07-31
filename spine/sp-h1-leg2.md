@@ -111,8 +111,8 @@ weighted as convergent structure, not as external verification of our object.
 - **[convergent-structure cite, not transfer]** Sargsyan (arXiv 2607.15629),
   machine-verified in Cubical Agda, exhibits a Specker-triangle configuration in
   which pairwise-consistent local causal data admit no global model, the
-  obstruction being a computable $H^1$ class with holonomy $\ne 1$. This is the
-  *same cohomological machinery* — Čech $H^1$ of a presheaf of local sections,
+  obstruction being a computable $H^1$ class with holonomy $\ne 1$. This exhibits
+  *structurally parallel* cohomological machinery — Čech $H^1$ of a presheaf of local sections,
   holonomy detecting failure-to-glue — but on a **different base** (measurement
   contexts, not agents) carrying a **different meaning** (contextuality / global
   labelling of *outcomes* in the Abramsky–Brandenburger sense, not statistical
@@ -125,7 +125,7 @@ weighted as convergent structure, not as external verification of our object.
   Künneth-epistemic transfer we must argue on its own terms; the analogy does not
   hand it to us.
 - **[convergent-structure cite, not transfer]** 2606.01663 ("A Sheaf Framework for
-  Strategic Multi-Agent Systems") independently built the same machinery on the
+  Strategic Multi-Agent Systems") independently built a *structurally parallel* construction on the
   game-theory side (Nash equilibria $\leftrightarrow$ global sections; $H^1 = 0$ iff
   a pure-strategy equilibrium exists; Künneth splitting the obstruction into
   geometric / epistemic / strategic parts). Their sheaf is a strategic
