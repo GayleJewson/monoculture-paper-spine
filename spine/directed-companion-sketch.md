@@ -214,7 +214,7 @@ posited such that:
 
 1. *(Branching interpretation.)* $\Gamma^+$ is the mean-offspring matrix of the
    multitype Galton–Watson process $\{Y_t\}$ obtained by retaining only the
-   excitatory couplings — i.e. $\mathbb{E}[Y_{t+1} \mid Y_t] = \Gamma^+ Y_t$; and
+   excitatory couplings — i.e. $\mathbb{E}[Y_{t+1} \mid Y_t] = \Gamma^{+\top} Y_t$; and
 2. *(Nonnegativity-preserving inhibition — the thinning realization.)*
    $\Gamma^-$ is nonnegativity-preserving: inhibition operates as sub-individual
    killing (inhibition probability $\le 1$ per unit), so mass counts cannot go
@@ -256,8 +256,9 @@ produces, in expectation, $\Gamma^+_{ij}$ units at $j$ in the next generation,
 with *no* inhibitory bookkeeping. Since $\Gamma^+$ is nonnegative, Perron–Frobenius
 applies and the classical Galton–Watson criticality dichotomy holds *exactly*:
 $\rho(\Gamma^+) < 1$ makes $\{Y_t\}$ subcritical, hence
-$\mathbb{E}[\mathbf{1}^\top Y_t] = \mathbf{1}^\top (\Gamma^+)^t Y_0 \to 0$
-geometrically and $Y_t \to 0$ a.s. (extinction). Under hypotheses (1)–(2), couple
+$\mathbb{E}[\mathbf{1}^\top Y_t] = \mathbf{1}^\top (\Gamma^{+\top})^t Y_0 \to 0$
+geometrically and $Y_t \to 0$ a.s. (extinction) — the threshold is still
+$\rho(\Gamma^+) < 1$ because $\rho(\Gamma^{+\top}) = \rho(\Gamma^+)$. Under hypotheses (1)–(2), couple
 $\{X_t\}$ and $\{Y_t\}$ on a common probability space with $X_0 = Y_0$: at each
 step the signed update produces the same excitatory offspring as $Y$ but *removes*
 additional mass through the absorptive $\Gamma^-$ channel (never adds), so
@@ -338,7 +339,7 @@ $$
 type-$j$ children, independent across targets $j$ and across particles. Write the
 resulting pre-thinning configuration as $\tilde Y$.
 
-> **Claim (a) — $\Gamma^+$ is the mean-offspring matrix.** $\mathbb{E}[\tilde Y \mid X_t] = \Gamma^+ X_t$.
+> **Claim (a) — $\Gamma^+$ is the mean-offspring matrix.** $\mathbb{E}[\tilde Y \mid X_t] = \Gamma^{+\top} X_t$.
 >
 > *Proof.* Fix a target coordinate $j$. A single type-$i$ particle contributes
 > $K_{ij} \sim \mathrm{Poisson}(\Gamma^+_{ij})$ type-$j$ children, so it contributes
@@ -349,9 +350,13 @@ resulting pre-thinning configuration as $\tilde Y$.
 > type-$j$ children is
 > $$
 > \mathbb{E}[\tilde Y_j \mid X_t] \;=\; \sum_{i=1}^m X_{t,i}\, \mathbb{E}[K_{ij}]
-> \;=\; \sum_{i=1}^m \Gamma^+_{ij}\, X_{t,i} \;=\; (\Gamma^+ X_t)_j .
+> \;=\; \sum_{i=1}^m \Gamma^+_{ij}\, X_{t,i} \;=\; (\Gamma^{+\top} X_t)_j .
 > $$
-> Stacking over $j$ gives $\mathbb{E}[\tilde Y \mid X_t] = \Gamma^+ X_t$. $\;\square$
+> Row $i$ of $\Gamma^+$ is parent type $i$, so the sum $\sum_i \Gamma^+_{ij} X_{t,i}$
+> pairs the $j$-th *column* of $\Gamma^+$ against $X_t$ — that is $(\Gamma^{+\top} X_t)_j$,
+> not $(\Gamma^+ X_t)_j$: the mean vector evolves by the transpose $\Gamma^{+\top}$,
+> consistent with the inhibitory input $I_j = (\Gamma^{-\top} X_t)_j$.
+> Stacking over $j$ gives $\mathbb{E}[\tilde Y \mid X_t] = \Gamma^{+\top} X_t$. $\;\square$
 
 Claim (a) discharges **hypothesis (1) by construction**: the excitation stage is a
 multitype Galton–Watson step whose mean-offspring matrix is exactly $\Gamma^+$.
@@ -376,7 +381,11 @@ it only ever deletes children, never manufactures them.
 **same probability space**: pure excitation, no thinning. Each type-$i$ particle
 in $Y_t$ spawns the *same* Poisson litters as it does in Stage 1 — we couple the
 litter randomness identically per shared particle — and Stage 2 is simply skipped
-for $Y$. Set $X_0 = Y_0$.
+for $Y$. Set $X_0 = Y_0$. Formally, couple the two populations by a
+particle-matching that identifies each $X_t$-particle with its copy in $Y_t$ (valid
+since $X_t \subseteq Y_t$) and assigns identical Poisson litters to matched
+particles; unmatched $Y_t$-particles branch independently. This is the standard
+subset coupling of exchangeable Poisson litters.
 
 > **Invariant.** $X_t \subseteq Y_t$ as multisets (every $X$-particle is also a
 > $Y$-particle) for all $t \ge 0$.
@@ -404,8 +413,9 @@ absent because there is no continuous medium to drive negative.
 mean-offspring matrix $\Gamma^+$ (Claim (a)); this is exactly the majorant process
 of the existing proof sketch (§"The Monotone-Majorant Containment Lemma," part
 (c)), which we do not re-prove. When $\rho(\Gamma^+) < 1$, that sketch gives
-$\mathbb{E}[\mathbf 1^\top Y_t] = \mathbf 1^\top (\Gamma^+)^t Y_0 \to 0$
-geometrically, so the integer-valued $Y_t \to 0$ a.s. (extinction). By the squeeze
+$\mathbb{E}[\mathbf 1^\top Y_t] = \mathbf 1^\top (\Gamma^{+\top})^t Y_0 \to 0$
+geometrically ($\rho(\Gamma^{+\top}) = \rho(\Gamma^+)$, so the threshold is
+unchanged), so the integer-valued $Y_t \to 0$ a.s. (extinction). By the squeeze
 $0 \le X_t \le Y_t$ established above, $X_t \to 0$ a.s.: the signed cascade of the
 EITB process is contained. Hypotheses (1) and (2) hold **as theorems** for this
 dynamics, so the Monotone-Majorant Containment Lemma applies to it with no residual
@@ -428,14 +438,16 @@ posit — the hypothesis-class is nonempty, and obligation (i) is discharged.
    realization** whose linearization is the defective continuous-linear model
    $X_{t+1} = \Gamma^+ X_t - \Gamma^- X_t$ that obligation (d) excluded. Take the
    canonical kernel $r_j = e^{-I_j}$ and read the *mean* update near the empty
-   configuration. The expected retained count at $j$ is
-   $\mathbb{E}[X_{t+1,j} \mid X_t] = (\Gamma^+ X_t)_j\, \mathbb{E}[e^{-I_j}]$; for
+   configuration. Since $I_j = (\Gamma^{-\top} X_t)_j$ is deterministic given $X_t$,
+   $r_j = e^{-I_j}$ is constant given $X_t$, so the expected retained count at $j$ is
+   $\mathbb{E}[X_{t+1,j} \mid X_t] = (\Gamma^{+\top} X_t)_j\, e^{-I_j}$ exactly (no
+   $\mathbb{E}[e^{-I_j}]$ term — $I_j$ is not random given $X_t$); for
    small occupancy $e^{-I_j} \approx 1 - I_j = 1 - (\Gamma^{-\top} X_t)_j$, so
    $$
    \mathbb{E}[X_{t+1,j} \mid X_t]
-   \;\approx\; (\Gamma^+ X_t)_j \;-\; (\Gamma^+ X_t)_j\,(\Gamma^{-\top} X_t)_j ,
+   \;\approx\; (\Gamma^{+\top} X_t)_j \;-\; (\Gamma^{+\top} X_t)_j\,(\Gamma^{-\top} X_t)_j ,
    $$
-   whose *first-order* (linear-in-$X_t$) term is $(\Gamma^+ X_t)_j$ and whose
+   whose *first-order* (linear-in-$X_t$) term is $(\Gamma^{+\top} X_t)_j$ and whose
    inhibitory correction is the excitation mean scaled down by the inhibitory input
    — the $-\Gamma^-$ loss channel, entering as a suppression of the excitatory flow
    rather than a free-standing subtraction. (Honest scope: in this product form the
