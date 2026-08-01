@@ -188,18 +188,22 @@ until a signed-process criticality theorem is supplied.
 
 ## The Monotone-Majorant Containment Lemma
 
-> ⟦DRAFT — co-lock w/ Claudius; obligation (d) discharged, dynamics-positing still open⟧
+> ⟦DRAFT — co-lock w/ Claudius; obligations (d) and (i) discharged, C387 transfer gate still open⟧
 > The following is a named statement of the gate above, promoted to lemma form so
 > the proof obligations are pinned in one place. Obligation (d) — the load-bearing
-> "$\Gamma^-$ genuinely contains" gap — is now **discharged** (co-confirmed with
+> "$\Gamma^-$ genuinely contains" gap — is **discharged** (co-confirmed with
 > Claudius): the lemma is a **theorem under the thinning realization** of
 > $\Gamma^-$, and *fails* under continuous linear subtraction, so hypothesis (2) is
-> pinned to the thinning regime. What remains open is weak joint 3 (positing the
-> propagation dynamics explicitly) and the C387 transfer gate; the containment
-> result is a **dynamical majorant under the thinning hypothesis, not a spectral
-> theorem for general signed $\Gamma$**. It is written to be *consistent with* the
-> weak joints §, not to supersede them: where they hedge, this lemma inherits the
-> hedge.
+> pinned to the thinning regime. Obligation (i) — weak joint 3, "posit the
+> propagation dynamics explicitly" — is now also **discharged**: the
+> Poisson excitatory–inhibitory thinned branching (EITB) process of
+> §"An explicit dynamics" exhibits *one* concrete rule under which hypotheses (1)
+> and (2) are **theorems rather than posits**, proving the lemma's hypothesis-class
+> is nonempty. What remains open is the C387 transfer gate (obligation (ii),
+> Claudius's); the containment result is a **dynamical majorant under the thinning
+> hypothesis, not a spectral theorem for general signed $\Gamma$**. It is written
+> to be *consistent with* the weak joints §, not to supersede them: where they
+> hedge, this lemma inherits the hedge.
 
 **Lemma (Monotone-Majorant Containment).**
 Let $\Gamma = \Gamma^+ - \Gamma^-$ be the signed conditional-excess co-failure
@@ -301,6 +305,151 @@ fails, and it is excluded by hypothesis (2). This resolution was **co-confirmed
 with Claudius**, whose intended "genealogical mass flow" is the thinning
 realization and whose own attempt at a thinning counterexample failed.
 
+## An explicit dynamics — the EITB process (discharges obligation (i))
+
+Weak joint 3 (obligation (i)) held that hypotheses (1)–(2) of the lemma were
+*posited*, not *derived*: the containment result was conditional on the existence
+of some propagation dynamics under which $\Gamma^+$ is the mean-offspring matrix
+and the $\Gamma^+$-only process dominates the signed process pathwise. We now
+**exhibit one such dynamics explicitly**, turning both hypotheses into theorems of
+a construction. This does not claim the real co-failure system *is* this dynamics;
+it shows the hypothesis-class of the lemma is **nonempty** — the two hypotheses are
+jointly realizable, not vacuous or mutually inconsistent. The lemma reads, after
+this section, as: *if a thinning–branching dynamics of this kind governs the panel,
+then $\rho(\Gamma^+) < 1$ contains the cascade*, and such a dynamics demonstrably
+exists.
+
+Call it the **Poisson excitatory–inhibitory thinned branching (EITB) process.**
+
+*State space.* $X_t \in \mathbb{Z}_{\ge 0}^m$, a configuration of "particles,"
+each carrying an agent-type $i \in \{1, \dots, m\}$. A particle is an active
+co-failure impulse; the count $X_{t,i}$ at coordinate $i$ is the number of live
+impulses currently sitting at agent $i$. This is the nonnegative *count* the
+thinning realization of §"Galton–Watson" requires — co-failure mass as a
+population of lineages, never a continuous medium.
+
+*One generation $X_t \to X_{t+1}$, in two stages.*
+
+**Stage 1 (excitation / branching).** Each type-$i$ particle, independently of all
+others, spawns a litter: for each target $j$ it produces
+$$
+K_{ij} \sim \mathrm{Poisson}(\Gamma^+_{ij})
+$$
+type-$j$ children, independent across targets $j$ and across particles. Write the
+resulting pre-thinning configuration as $\tilde Y$.
+
+> **Claim (a) — $\Gamma^+$ is the mean-offspring matrix.** $\mathbb{E}[\tilde Y \mid X_t] = \Gamma^+ X_t$.
+>
+> *Proof.* Fix a target coordinate $j$. A single type-$i$ particle contributes
+> $K_{ij} \sim \mathrm{Poisson}(\Gamma^+_{ij})$ type-$j$ children, so it contributes
+> mean $\mathbb{E}[K_{ij}] = \Gamma^+_{ij}$ (the mean of a $\mathrm{Poisson}(\lambda)$
+> is $\lambda$). There are $X_{t,i}$ type-$i$ particles, each spawning an
+> independent such litter, and the litters of different parents (and different
+> targets) are independent, so by linearity of expectation the total mean number of
+> type-$j$ children is
+> $$
+> \mathbb{E}[\tilde Y_j \mid X_t] \;=\; \sum_{i=1}^m X_{t,i}\, \mathbb{E}[K_{ij}]
+> \;=\; \sum_{i=1}^m \Gamma^+_{ij}\, X_{t,i} \;=\; (\Gamma^+ X_t)_j .
+> $$
+> Stacking over $j$ gives $\mathbb{E}[\tilde Y \mid X_t] = \Gamma^+ X_t$. $\;\square$
+
+Claim (a) discharges **hypothesis (1) by construction**: the excitation stage is a
+multitype Galton–Watson step whose mean-offspring matrix is exactly $\Gamma^+$.
+(Well-defined because $\Gamma^+_{ij} \ge 0$, so every Poisson rate is legitimate.)
+
+**Stage 2 (inhibition / thinning).** Each type-$j$ child in $\tilde Y$ is retained
+independently with probability $r_j(X_t) \in [0,1]$ and killed with probability
+$1 - r_j$, where $r_j$ is *any* prescribed function that is non-increasing in the
+local inhibitory input
+$$
+I_j \;:=\; \sum_{i=1}^m \Gamma^-_{ij}\, X_{t,i} \;=\; (\Gamma^{-\top} X_t)_j \;\ge\; 0 .
+$$
+The retained configuration is $X_{t+1}$. A canonical choice is $r_j = e^{-I_j}$,
+which lies in $(0,1]$, equals $1$ when there is no inhibition ($I_j = 0$), and
+$\to 0$ under strong inhibition; but the precise form is immaterial. **Any**
+retention probability in $[0,1]$ yields a valid thinning. This is deliberate: the
+containment conclusion is a property of the *mean matrix* $\Gamma^+$, not of the
+inhibitory kernel $r_j$. The inhibition can be as weak or as fierce as one likes;
+it only ever deletes children, never manufactures them.
+
+**The coupling (discharges hypothesis (2)).** Define the majorant $\{Y_t\}$ on the
+**same probability space**: pure excitation, no thinning. Each type-$i$ particle
+in $Y_t$ spawns the *same* Poisson litters as it does in Stage 1 — we couple the
+litter randomness identically per shared particle — and Stage 2 is simply skipped
+for $Y$. Set $X_0 = Y_0$.
+
+> **Invariant.** $X_t \subseteq Y_t$ as multisets (every $X$-particle is also a
+> $Y$-particle) for all $t \ge 0$.
+>
+> *Proof by induction on $t$.* **Base:** $X_0 = Y_0$, so $X_0 \subseteq Y_0$.
+> **Step:** suppose $X_t \subseteq Y_t$. Each particle shared by $X_t$ and $Y_t$
+> produces, under the common coupling, an *identical* Poisson litter in both
+> processes; the particles in $Y_t \setminus X_t$ produce additional $Y$-litters.
+> Hence the pre-thinning excitatory offspring of $X_t$ is a sub-multiset of
+> $Y_{t+1}$: writing $\tilde Y^X$ for the Stage-1 configuration generated from
+> $X_t$, we have $\tilde Y^X \subseteq Y_{t+1}$. Stage-2 thinning then only
+> *deletes* particles from $\tilde Y^X$ (each child is retained or killed; nothing
+> is added), so $X_{t+1} \subseteq \tilde Y^X \subseteq Y_{t+1}$. $\;\square$
+
+Because containment of multisets is entrywise count-domination, the invariant gives
+$X_t \le Y_t$ **entrywise for all $t$**. This is exactly hypothesis (2)'s pathwise
+domination $X_t \le Y_t$ under the natural coupling with $X_0 = Y_0$ — now a
+**theorem of the construction**, not an assumption. Note where the thinning
+realization does the work: Stage 2 *removes* children from a nonnegative count, so
+mass can never go negative and $-\Gamma^-$ can never "re-add" mass; the pathology
+that broke the continuous-linear model (§"Galton–Watson," part (d)) is structurally
+absent because there is no continuous medium to drive negative.
+
+**Conclusion.** $\{Y_t\}$ is a subcritical multitype Galton–Watson process with
+mean-offspring matrix $\Gamma^+$ (Claim (a)); this is exactly the majorant process
+of the existing proof sketch (§"The Monotone-Majorant Containment Lemma," part
+(c)), which we do not re-prove. When $\rho(\Gamma^+) < 1$, that sketch gives
+$\mathbb{E}[\mathbf 1^\top Y_t] = \mathbf 1^\top (\Gamma^+)^t Y_0 \to 0$
+geometrically, so the integer-valued $Y_t \to 0$ a.s. (extinction). By the squeeze
+$0 \le X_t \le Y_t$ established above, $X_t \to 0$ a.s.: the signed cascade of the
+EITB process is contained. Hypotheses (1) and (2) hold **as theorems** for this
+dynamics, so the Monotone-Majorant Containment Lemma applies to it with no residual
+posit — the hypothesis-class is nonempty, and obligation (i) is discharged.
+
+**Two remarks — why this is the right object.**
+
+1. *Robustness (the conclusion depends only on the mean matrix).* Poisson plays no
+   essential role. Replace $\mathrm{Poisson}(\Gamma^+_{ij})$ by **any** offspring
+   law with mean $\Gamma^+_{ij}$ and both Claim (a) and the coupling invariant are
+   unchanged: (a) uses only $\mathbb{E}[K_{ij}] = \Gamma^+_{ij}$, and the coupling
+   uses only that the parent's litter is shared and that Stage 2 deletes. A natural
+   alternative is $K_{ij} \sim \mathrm{Bernoulli}(\Gamma^+_{ij})$, which is a valid
+   law precisely because $\Gamma^+_{ij} \le 1$ — it is a difference of two
+   probabilities, $\Pr[j \mid i] - \Pr[j] \le 1$. So containment is a property of
+   $\Gamma^+$ as a *mean matrix*, invariant to the offspring distribution's higher
+   moments.
+
+2. *Repair of the linear defect.* The EITB process is the **nonnegative nonlinear
+   realization** whose linearization is the defective continuous-linear model
+   $X_{t+1} = \Gamma^+ X_t - \Gamma^- X_t$ that obligation (d) excluded. Take the
+   canonical kernel $r_j = e^{-I_j}$ and read the *mean* update near the empty
+   configuration. The expected retained count at $j$ is
+   $\mathbb{E}[X_{t+1,j} \mid X_t] = (\Gamma^+ X_t)_j\, \mathbb{E}[e^{-I_j}]$; for
+   small occupancy $e^{-I_j} \approx 1 - I_j = 1 - (\Gamma^{-\top} X_t)_j$, so
+   $$
+   \mathbb{E}[X_{t+1,j} \mid X_t]
+   \;\approx\; (\Gamma^+ X_t)_j \;-\; (\Gamma^+ X_t)_j\,(\Gamma^{-\top} X_t)_j ,
+   $$
+   whose *first-order* (linear-in-$X_t$) term is $(\Gamma^+ X_t)_j$ and whose
+   inhibitory correction is the excitation mean scaled down by the inhibitory input
+   — the $-\Gamma^-$ loss channel, entering as a suppression of the excitatory flow
+   rather than a free-standing subtraction. (Honest scope: in this product form the
+   inhibitory term is *second order* in $X_t$; it is a small-occupancy correction,
+   and the signed map $\Gamma = \Gamma^+ - \Gamma^-$ is recovered as the leading
+   excitatory operator *plus* this bilinear damping, not as a literal first-order
+   difference of two linear maps — see the judgment note below.) The point stands
+   qualitatively: EITB reproduces the intended excite-then-suppress structure of the
+   signed model while staying nonnegative by construction, and so *fixes exactly*
+   the mass-re-adding pathology (a driven-negative component flipping the sign of
+   $-\Gamma^- X_t$) that made the continuous-linear model fail. It is the nonlinear,
+   nonnegative object of which the defective linear model is the naive — and
+   sign-unsafe — linearization.
+
 ## The asymmetric star, worked concretely
 
 Make the whole apparatus concrete on the topology C387 already ran: an
@@ -349,17 +498,21 @@ true statement and stop.
    A criticality statement for the *signed* $\rho(\Gamma)$ itself is not
    established here.
 
-3. **The propagation dynamics is a modeling choice, not yet posited as settled.**
-   The Galton–Watson reading — and with it the majorant argument underpinning the
-   sufficient condition — requires an explicit generating dynamics: a rule for how a
-   co-failure impulse at one agent propagates to others, under which (a) $\Gamma^+$
-   is the mean-offspring matrix and (b) the $\Gamma^+$-only process dominates the
-   signed process. We have *not* fixed that dynamics. Different dynamics could break
-   either the branching interpretation or the domination, and with them the
-   sufficient condition. Positing the dynamics explicitly and checking these two
-   properties is an open item; until it is done, treat §"Galton–Watson" and
-   §"The gate" as *conditional on* a dynamics of this kind, not as free consequences
-   of the definition of $\Gamma$.
+3. **The propagation dynamics is a modeling choice — now realized explicitly
+   (obligation (i) discharged).** The Galton–Watson reading — and with it the
+   majorant argument underpinning the sufficient condition — requires an explicit
+   generating dynamics: a rule for how a co-failure impulse at one agent propagates
+   to others, under which (a) $\Gamma^+$ is the mean-offspring matrix and (b) the
+   $\Gamma^+$-only process dominates the signed process. The **EITB process** of
+   §"An explicit dynamics" now supplies exactly such a rule, and makes (a) and (b)
+   **theorems** of the construction rather than posits — so the hypothesis-class of
+   the lemma is demonstrably nonempty. The residual hedge is honest and narrow: this
+   exhibits *one* consistent dynamics, it does **not** assert the real co-failure
+   system is governed by it. Different dynamics could still break either the
+   branching interpretation or the domination; the lemma is therefore properly read
+   as *conditional on a thinning–branching dynamics of the EITB kind*, and what
+   §"An explicit dynamics" settles is that such a dynamics exists and that the two
+   hypotheses are jointly realizable — not that the panel must obey it.
 
 4. **The C387 spectral identity is still analogy-only.** As in the earlier draft:
    whether $\Gamma^+$'s Perron structure coincides with Chung's
@@ -404,9 +557,14 @@ decomposition that makes the criticality reading exact.
   most care about, and the row that dominates $\rho(\Gamma^+)$ in the asymmetric
   star. A shrinkage / minimum-support treatment is needed before any
   $\rho(\Gamma^+)$ estimate is trustworthy.
-- **The propagation dynamics.** Posit it explicitly (weak joint 3) and verify that
-  $\Gamma^+$ is its mean-offspring matrix and that it dominates the signed process.
-  Until then the criticality gate is conditional.
+- **The propagation dynamics — DISCHARGED (obligation (i)).** Posited explicitly as
+  the **EITB process** (§"An explicit dynamics"): its excitation stage has
+  $\Gamma^+$ as mean-offspring matrix (Claim (a)) and its thinning stage yields the
+  pathwise domination $X_t \le Y_t$ (coupling invariant) — both as theorems, not
+  posits. The gate is therefore conditional on a thinning–branching dynamics *of
+  this kind* rather than on the unproved existence of any such dynamics; the
+  hypothesis-class is nonempty. It remains a modeling choice that the real panel
+  need not obey — the discharge is realizability, not identification.
 - **The transfer gate.** Does $\Gamma^+$'s Perron structure actually coincide with
   Chung's directed-Laplacian-under-$\pi$, or is the C387 correspondence analogy-only?
   This must be argued from the definitions, not assumed from the shared shape.
