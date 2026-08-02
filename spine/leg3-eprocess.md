@@ -1,0 +1,316 @@
+---
+status: DRAFT SCAFFOLD — Lyra, 2026-08-02, Leg-3 body for the three-leg joint paper (JUDGe-2026)
+section: Leg 3 — the anytime-valid co-failure monitor (e-process SLA)
+note: This is a scaffold — construction, structure, and honest gap-flags, not a final polished draft.
+      All numbers marked ⟦from simulation…⟧ are indicative and pending revalidation on the RoPoLL testbed.
+      All ⟦CITE⟧ / ⟦GAP⟧ markers are load-bearing TODOs, not decoration.
+---
+
+> **Terminology, pinned here for the whole paper (this is the object the $\Omega_{\mathrm{blind}}$
+> subsection defers to).** The per-step bet $e_s = 1 + \lambda(U_s - V_s)$ satisfies
+> $\mathbb{E}[e_s \mid \mathcal{F}_{s-1}] = 1$ under the *exact* null (§3) — a **martingale**
+> increment — and $\mathbb{E}[e_s \mid \mathcal{F}_{s-1}] \le 1$ once the $\delta_k$
+> drift-slack of §5 is subtracted, with $e_0 = 1$ and $e_s \ge 0$ throughout. So the running
+> product $M_t = \prod_{s \le t} e_s$ is a **nonnegative martingale under the exact null**
+> (a *test martingale*, since $M_0 = 1$), demoted to a **nonnegative supermartingale** (a
+> *test supermartingale*) precisely by the $\delta_k$ slack under approximate stratification —
+> which is all Ville needs. The process $\{M_t\}_{t\ge 0}$ —
+> equivalently its Robbins mixture over $\lambda$ — is an **e-process**. By **Ville's inequality**,
+> $\mathbb{P}\big(\sup_t M_t \ge 1/\alpha\big) \le \alpha$ under $H_0$, which is the operational,
+> anytime-valid level-$\alpha$ test (the SLA). An **e-value** is the value $M_\tau$ at any stopping
+> time $\tau$, with $\mathbb{E}[M_\tau] \le 1$ by optional stopping. We use these four terms in
+> exactly these senses throughout; the $\Omega_{\mathrm{blind}}$ subsection's terminology
+> header is reconciled to this definition.
+
+# Monitoring the collapse: an anytime-valid co-failure e-process
+
+## 1. The diagnostic is settled; the monitor is not
+
+Start with what the field now agrees on. Across judge panels and model panels, the
+*effective number of independent voters* collapses. Where a naive count would report
+$m$ nominally distinct judges, the co-failure–deflated count saturates at
+$n_{\mathrm{eff}} \approx 2$, rarely climbing past $2$–$3$ no matter how many members
+are added. This is the Kish/Kohli effective-sample-size applied to the failure axis:
+given a mean pairwise co-failure correlation $\bar\varphi$, the panel's effective size
+deflates as $n_{\mathrm{eff}} = m / \big(1 + (m-1)\bar\varphi\big) \to 1/\bar\varphi$ for
+large $m$ — a $1/\bar\varphi$-type ceiling, not a linear return on membership
+⟦CITE — needed: Kohli (Leg-1 primary); Kish effective sample size⟧. The same
+saturation has been rediscovered from an independent direction: RoPoLL reports a mean
+within-panel co-failure weight $\bar\gamma_W \in [0.45, 0.53]$ and an effective panel
+size that saturates at $N \approx 2$–$3$ ⟦CITE: RoPoLL 2606.30931⟧. Two labs, two
+estimators, one stylized fact. **The collapse is not in dispute.** Leg 1 established it
+on the failure-correlation axis; RoPoLL corroborates it on a co-failure-weight axis.
+
+What *nobody does* is monitor the collapse as it happens. The prior art is batch. Han's
+de Finetti cascade gives a fixed-sample reliability ceiling ⟦CITE: Han 2607.13918⟧; Li &
+Hai derive a state-dependent copula floor on co-failure, again for a fixed sample
+⟦CITE: Li & Hai 2607.23931⟧; RoPoLL itself is a batch estimator of $\bar\gamma_W$. The
+one streaming instrument in the neighborhood — Xie's sequential monitor
+⟦CITE: Xie 2606.07624⟧ — watches *marginal* scalars, one stream at a time: it can tell
+you that judge $i$'s fail-rate is drifting, but it says nothing about whether $i$ and $j$
+are drifting *together*. Every existing object is either batch or marginal.
+
+Our contribution is precisely the cell those two axes leave empty: **a second-order,
+anytime-valid monitor of the dependence channel itself.** Not the marginals — the
+*co-failure between* two streams, tracked sequentially, with a false-alarm guarantee
+that holds at every stopping time and under a null whose nuisance parameters (the
+marginal fail-rates) are allowed to drift arbitrarily. By the third paragraph the
+novelty should already be legible: the diagnostic quantity is $n_{\mathrm{eff}}$
+(equivalently $\bar\varphi$), and the monitor is a betting process on an *observed*
+co-failure baseline that we now construct.
+
+## 2. The null, and the naive-plug-in trap
+
+Fix two judges (or two models) $i, j$. On item $s$ let $W_i^s \in \{0,1\}$ indicate that
+judge $i$ *fails* on item $s$. The marginal fail-rates $p_i, p_j$ are **unknown** and
+**drift** along the stream — this is not a technical convenience, it is the empirical
+regime (judges degrade, prompts shift, difficulty is non-stationary). The composite null
+is the natural one:
+$$
+H_0:\quad \text{conditional on the stream filtration } \mathcal{F}_{s-1},\ \
+W_i^s \perp\!\!\!\perp W_j^s \ \text{within item } s,
+\qquad\text{i.e. } \mathbb{E}[W_i^s W_j^s \mid \mathcal{F}_{s-1}] = p_i^s\, p_j^s .
+$$
+Co-failure equals the product of marginals; any excess is the signal we hunt.
+
+The obvious construction is a Ville-style betting skeleton. Let $Z^t$ be the observed
+same-item co-failure indicator and $m_t$ the predicted baseline product; bet
+$$
+e_t = 1 + \lambda_t\,(Z^t - m_t).
+$$
+This is textbook-valid *if $m_t$ is known*: then $\mathbb{E}[e_t \mid \mathcal{F}_{t-1}]
+= 1 + \lambda_t(\mathbb{E}[Z^t] - m_t) = 1$ under $H_0$, and the product is a test
+martingale. But $m_t = p_i^s p_j^s$ is exactly the drifting nuisance we do not know. Any
+*predictable plug-in* $\hat m_t$ — a running estimate formed from $\mathcal{F}_{t-1}$ —
+that systematically *underestimates* the drifting baseline makes
+$\mathbb{E}[e_t \mid \mathcal{F}_{t-1}] = 1 + \lambda_t(m_t - \hat m_t) > 1$ under $H_0$.
+The wealth process drifts up with no signal present, and Ville's inequality is voided:
+the test rejects a true null. In simulation this is not a marginal effect —
+a plug-in monitor under drifting marginals produced a **false-reject rate of $\approx 90\%$**
+⟦from simulation, to be revalidated on the RoPoLL testbed⟧.
+
+This is worth naming precisely, because it is the paper's recurring failure mode wearing
+a new coat: **it is an estimand-substitution failure.** The bet is honest — it is a true
+bet on a co-failure excess — but it is placed against a *mis-estimated* baseline, so the
+quantity actually being tested is not the co-failure excess but "co-failure excess plus
+plug-in bias." A true wager on the wrong estimand. The rest of this section is the
+construction that removes the estimation entirely, so there is no baseline to
+mis-estimate.
+
+## 3. The discharge: cross-item pairing gives an *observed* baseline
+
+Work within a *stratum* — a block of items on which both marginals are approximately
+constant, $p_i \approx a$ and $p_j \approx b$. (Section 5 makes "approximately" precise
+and pays for it.) Pick two distinct items $s \ne t$ in the stratum and form two
+statistics:
+$$
+U \;:=\; W_i^s \, W_j^s
+\qquad\text{(same-item co-failure — carries the within-item dependence, if any),}
+$$
+$$
+V \;:=\; W_i^s \, W_j^t
+\qquad\text{(cross-item product — judge $i$ on item $s$, judge $j$ on a *different* item $t$).}
+$$
+The whole construction turns on one observation. Because $s \ne t$, the indicators
+$W_i^s$ and $W_j^t$ come from *different items*, and are therefore independent
+**regardless of any within-item dependence structure** — the within-item coupling that
+$H_0$ is about simply cannot reach across two different items. Hence
+$$
+\mathbb{E}[V \mid \mathcal{F}] \;=\; \mathbb{E}[W_i^s]\,\mathbb{E}[W_j^t] \;=\; a\cdot b
+\qquad\textbf{exactly.}
+$$
+$V$ is an **observed, margins-free baseline for the product $a b$**: it estimates the
+independence baseline *without estimating $p_i$ or $p_j$ anywhere*. No plug-in, no running
+mean of the marginals, no predictable nuisance — the baseline is a directly observed
+random variable with the correct expectation by construction. This is what closes the
+trap of §2: there is nothing left to mis-estimate.
+
+**The bet.** With the observed baseline in hand, wager
+$$
+\boxed{\,e \;=\; 1 + \lambda\,(U - V), \qquad \lambda \in [0,1].\,}
+$$
+
+*Nonnegativity.* $U, V \in \{0,1\}$, so $U - V \in \{-1, 0, 1\}$, hence
+$e \in [1-\lambda,\, 1+\lambda] \subseteq [0, 2]$ for $\lambda \le 1$. In particular
+$e \ge 0$, so the running product is a genuine nonnegative wealth process. ✓
+
+*Validity under $H_0$.* Within-item independence gives $\mathbb{E}[U \mid \mathcal{F}]
+= a b$, and the cross-item argument gives $\mathbb{E}[V \mid \mathcal{F}] = a b$. The two
+baselines coincide, so
+$$
+\mathbb{E}[e \mid \mathcal{F}] \;=\; 1 + \lambda\big(\mathbb{E}[U \mid \mathcal{F}]
+- \mathbb{E}[V \mid \mathcal{F}]\big) \;=\; 1
+\qquad\textbf{exactly, for every } \lambda \in [0,1].
+$$
+So under the *exact* null — A1 cross-item independence, A2 stratum-constant marginals, and
+within-item independence — the increment is a **martingale** increment, not merely a
+supermartingale one: $\mathbb{E}[e_k \mid \mathcal{F}_{k-1}] = 1$. Started at $e_0 = 1$, the
+product $M_t = \prod_{s \le t} e_s$ is a **nonnegative test martingale**. It is only the
+$\delta_k$ slack under *approximate* stratification (finite strata whose marginals match
+within $\varepsilon$, see §5) that demotes it to a **supermartingale**,
+$\mathbb{E}[e_k \mid \mathcal{F}_{k-1}] \le 1$ — which is all Ville needs. Either way it is
+an e-process, and Ville's inequality delivers the anytime-valid SLA:
+$\mathbb{P}(\sup_t M_t \ge 1/\alpha) \le \alpha$.
+
+*Ville validity conditions.* This anytime-valid guarantee is not automatic; it holds only
+under the following four conditions, stated explicitly because each is load-bearing:
+1. **Predictability.** Each bet $\lambda_k$ is $\mathcal{F}_{k-1}$-measurable — it may not
+   depend on the current increment's data $(U_k, V_k)$. A bet tuned to the increment it
+   wagers on breaks the martingale property.
+2. **Bounded bet $\lambda_k \in [0,1]$.** This is load-bearing for nonnegativity $e_k \ge 0$:
+   if $\lambda_k > 1$ then the outcome $U = 0, V = 1$ gives $e_k = 1 - \lambda_k < 0$, the
+   wealth process can go negative, and Ville's guarantee breaks.
+3. **Within-item null per increment.** The within-item independence null
+   $\mathbb{E}[U_k \mid \mathcal{F}_{k-1}] = a b$ holds at each increment $k$.
+4. **Disjoint pairs and global A2.** The item-pairs across increments are disjoint /
+   independent, *and* A2 (stratum-constant marginals) holds **globally across all paired
+   items, not merely within a single pair**. Otherwise the two-sided drift bias of §5
+   accumulates across increments, $\mathbb{E}[P_n]$ can exceed $1$, and Ville is violated.
+
+*Removing $\lambda$ (Robbins mixture).* The tuning parameter $\lambda$ trades power for
+robustness and there is no oracle value. Rather than pick one, mix: place a prior
+$\mu(\mathrm{d}\lambda)$ on $[0,1]$ and integrate the wealth,
+$$
+\bar M_t \;=\; \int_0^1 \Big(\textstyle\prod_{s\le t}\big(1 + \lambda(U_s - V_s)\big)\Big)\,\mu(\mathrm{d}\lambda),
+$$
+a mixture of e-processes, hence itself an e-process — the mixture is where the tuning
+disappears and the guarantee survives. Indicative operating numbers, to be treated as
+*pending*, not established: $\approx 0.1\%$ false-reject and $\approx 68\%$ power at a
+co-failure excess of $r = 0.4$ ⟦from simulation, to be revalidated on the RoPoLL
+testbed⟧.
+
+**What kind of object this is.** The construction is the sequential-betting analogue of a
+**permutation test for independence.** $V$ is the "permuted" statistic — the same-item
+pairing $W_i^s W_j^s$ with one index shuffled to a different item, which under $H_0$ has
+the identical expectation and destroys any within-item coupling — and $U$ is the observed
+same-item statistic. Betting on $U - V$ is betting that the observed pairing beats its own
+permutation, adjudicated online and at any stopping time rather than against a fixed
+reference distribution.
+
+## 4. Where this sits relative to $\Omega_{\mathrm{blind}}$ and Leg 2
+
+The $\Omega_{\mathrm{blind}}$ subsection uses Han's batch de Finetti ceiling as the
+*structural twin* of this streaming monitor and is careful never to import Han's numbers
+into the streaming estimand. This section supplies the streaming object that twin is a
+twin *of*: the per-pair co-failure e-process defined in §3. The serial-to-parallel
+transfer flagged there — whether the streaming residual inherits Han's batch exponent $b$
+— remains open and is *not* discharged here; §3 constructs the monitor, it does not claim
+Han's ceiling transfers to it.
+
+The link to Leg 2 is deliberately kept **qualitative**, matching the scope fixed in
+$\Omega_{\mathrm{blind}}$. An $H^1$-informed prior may up-weight *which pairs to monitor*
+— steering the betting toward pairs the Leg-2 obstruction class flags as coupled — but
+this is a prior on *where to bet*: it affects power, never validity, and enters no bound.
+No quantitative $H^1$-weighting formula appears in this section, and none should; if one
+ever does, it re-opens the scope question flagged in $\Omega_{\mathrm{blind}}$. We claim
+the co-failure estimand and a qualitative cohomological framing of *where* to spend
+statistical power; we do not claim any quantitative cohomological bound on the e-process.
+
+## 5. The open piece: per-stratum slack $\delta_k$
+
+The one place the construction spends an assumption is the stratification, and honesty
+requires stating exactly what it buys and what it still owes. Real strata match marginals
+only *approximately*, and the resulting bias is **two-sided** — this is the subtle point
+that determines how the slack must be sized. Suppose within a stratum judge $j$'s marginal
+drifts between the two paired items, $\mathbb{P}(W_j^s = 1) = b_s$ and
+$\mathbb{P}(W_j^t = 1) = b_t$, while within-item independence still holds exactly. Writing
+$a$ for judge $i$'s marginal, the per-increment bias is
+$$
+\mathbb{E}[e] - 1 \;=\; \lambda\,a\,(b_s - b_t),
+$$
+whose **sign matches $\operatorname{sign}(b_s - b_t)$ and can therefore be either sign** —
+it is not one-sided. When $b_s > b_t$ the bias pushes $\mathbb{E}[e]$ *above* $1$,
+manufacturing a spurious co-failure alarm out of pure marginal drift; when $b_s < b_t$ it
+pushes below. The magnitude bound is tight:
+$$
+\big|\mathbb{E}[e] - 1\big| \;=\; \lambda\,a\,|b_s - b_t| \;\le\; 2\lambda a\varepsilon \;\le\; 2\varepsilon,
+$$
+using $|b_s - b_t| \le 2\varepsilon$ (both within $\varepsilon$ of the stratum center) and
+$\lambda, a \le 1$, where $\varepsilon$ is the within-stratum marginal radius.
+
+Because the bias can be *positive*, the slack $\delta_k$ is **not a passive correction**:
+it must be sized to *dominate the worst-case positive excursion*, not merely to absorb a
+one-signed offset. Set
+$$
+e \;=\; 1 + \lambda\big(U - V - \delta_k\big), \qquad \delta_k = 2\varepsilon \ \ (\text{or } 2\lambda a\varepsilon),
+$$
+subtracting $\delta_k$ from the bet so that $\mathbb{E}[e \mid \mathcal{F}] \le 1$ holds
+conservatively against the worst-case positive drift. Equivalently, pair only items whose
+marginals are *provably* within $\varepsilon$. Either way the supermartingale property is
+restored at a cost in power proportional to $\delta_k$.
+
+This is a **defensible bound, not a structural hole** — the bias is bounded (by $2\varepsilon$)
+and removable by a slack whose size we can name — but precisely because it is two-sided the
+slack must dominate the positive excursion rather than cancel a known offset. The *constant*
+and the *granularity* remain genuinely open: choosing $\delta_k$ too large throws away power,
+too small voids validity, and the optimal stratification granularity (how finely to
+block the stream so that $\varepsilon$ is small but strata still contain enough items to
+pair) is a design question we have not closed.
+
+⟦GAP: tighten the slack constant $\delta_k$ and choose the stratification granularity.
+Open sub-questions: (i) is $\delta_k = 2\varepsilon$ tight, or can the factor
+$\lambda a \le 1$ be exploited for a smaller slack (e.g. $\delta_k = 2\lambda a\varepsilon$)
+while still dominating the worst-case positive excursion? (ii) an adaptive stratification
+that estimates $\varepsilon$ per block from data without re-introducing a predictable
+plug-in bias (note the tension: estimating $\varepsilon$ is itself estimation — show it
+does not resurrect the §2 trap); (iii) a power accounting for the $\delta_k$ penalty
+against the $r = 0.4$ operating point.⟧
+
+## 6. The unification: cross-item pairing *is* Barber–Candès–Ramdas conditional validity
+
+Two threads that entered from different doors turn out to be the same requirement. The
+cross-item pairing of §3 is valid **iff** the two paired items $s, t$ share the same
+marginals $(p_i, p_j)$ — that is the exact condition under which $\mathbb{E}[V] = ab$ and
+$V$ is an observable baseline. Independently, calibrated anytime-valid coverage for a
+composite null of this shape holds **iff** one conditions on the covariate that indexes
+the nuisance — the Barber–Candès–Ramdas conditional-validity requirement
+⟦CITE: Barber–Candès–Ramdas–Tibshirani 1903.04684⟧. These are not two assumptions that
+happen to co-occur; they are one assumption seen from two sides. The stratum is the
+conditioning event; matching marginals within a stratum is both what makes $V$ an
+observable baseline *and* what makes the coverage conditionally valid.
+
+> *The stratification condition that makes the baseline observable is identically the
+> condition under which calibrated coverage holds.*
+
+The *mai nafka minah* — the practical difference this identity buys — is that the
+stratification is not a modeling convenience we could relax with more cleverness; it is
+forced by BCR from the validity side and forced by estimability from the construction
+side, and any attempt to drop it fails on both axes at once. That is why §5's slack is an
+honest open piece and not a removable inconvenience: BCR tells us the conditioning cannot
+be conditioned away for free.
+
+## Citations owed — ⟦CITE — needed⟧
+
+*(Do not fabricate. Verify each from primary before this section is load-bearing in
+submission. arXiv IDs inlined above are collected here; author/year references still need
+full bibliographic entries.)*
+
+**Betting / e-values / game-theoretic probability**
+- ⟦CITE⟧ Shafer, "Testing by betting" (JRSS-A, 2021).
+- ⟦CITE⟧ Shafer & Vovk, *Game-Theoretic Foundations for Probability and Finance* / e-values (2019).
+- ⟦CITE⟧ Robbins mixture — the mixture-martingale construction ⟦needed: canonical reference for the $\lambda$-mixture; likely Robbins 1970 / Howard–Ramdas–McAuliffe–Sekhon time-uniform bounds — verify⟧.
+- ⟦CITE⟧ Ville's inequality — ⟦needed: primary or a standard game-theoretic-probability restatement⟧.
+
+**Conditional validity**
+- ⟦CITE: Barber–Candès–Ramdas–Tibshirani 1903.04684⟧ (conditional coverage / the identity in §6).
+
+**The diagnostic and the batch prior art**
+- ⟦CITE: RoPoLL 2606.30931⟧ ($\bar\gamma_W \in [0.45,0.53]$, $N \approx 2$–$3$ saturation; batch).
+- ⟦CITE: Han 2607.13918⟧ (de Finetti reliability ceiling; batch — the $\Omega_{\mathrm{blind}}$ twin).
+- ⟦CITE: Li & Hai 2607.23931⟧ (state-dependent copula floor; batch).
+- ⟦CITE: Xie 2606.07624⟧ (sequential monitor of *marginal* scalars, one stream at a time).
+- ⟦CITE⟧ Kohli (Leg-1 primary; $n_{\mathrm{eff}} \approx 2$ on $\bar\varphi$) — ⟦needed: full ref⟧.
+
+**N-version / common-cause failure lineage (the reliability-engineering roots of co-failure)**
+- ⟦CITE⟧ Knight & Leveson (1986), "An experimental evaluation of the assumption of independence in multiversion programming."
+- ⟦CITE⟧ Brilliant, Knight & Leveson (1990), correlated failures in N-version programming.
+- ⟦CITE⟧ Mosleh, common-cause failure alpha-factor model (CCF reliability).
+
+**Portfolio / response-diversity analogue (outside AI)**
+- ⟦CITE⟧ Schindler et al. (2015), response diversity / the portfolio effect in ecology.
+
+⟦GAP: cross-check that every arXiv ID above is verified from primary (RoPoLL 2606.30931,
+Han 2607.13918, Li & Hai 2607.23931, Xie 2606.07624, BCR 1903.04684). RoPoLL, Li & Hai,
+and Xie are cited here from the brief and have NOT yet been Lyra-primary-verified; flag
+them as such until confirmed, exactly as the connective-tissue section flags its own
+convergence-paper IDs.⟧
