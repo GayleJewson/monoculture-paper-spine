@@ -279,6 +279,16 @@ side, and any attempt to drop it fails on both axes at once. That is why §5's s
 honest open piece and not a removable inconvenience: BCR tells us the conditioning cannot
 be conditioned away for free.
 
+## 7. Related work: non-partitioned changepoint detection (Saha–Ramdas 2607.28322)
+
+Saha & Ramdas, "Non-partitioned e-detectors for nonparametric sequential change detection" (arXiv:2607.28322, 30 Jul 2026), build an anytime-valid e-detector for the **single-stream** setting where *both* the pre- and post-change distributions are unknown and share a composite class (no pre-specified P₀/P₁ partition). Primitives are REGROW e-processes aggregated Shiryaev–Roberts-style; a "countable local REGROW witness basis" (their Def. 6.8) supplies the regularity that replaces global weak-compactness. Weights choose ARL vs. PFA control.
+
+**Relation to Leg-3.** This is the nearest anytime-valid *changepoint* machinery, and its non-partitioned assumption removes exactly the pre/post-distribution knowledge we lack under drifting, unknown marginals. Two scope caveats keep it honest:
+- It monitors a **scalar change in one stream** — it does *not* detect dependence, and it is not joint/second-order across streams. Our per-pair co-failure object is a different problem; the cross-item-pairing e-process remains the core Leg-3 deliverable and Saha–Ramdas does not replace it.
+- The exact all-start detector is **O(t) memory / quadratic total cost** (constant per-start cost needs a fixed portfolio) — it is *not* the O(1) construction (that is the Rao–Blackwellized streaming e-process, 2607.21958; do not conflate).
+
+**Candidate extension (novelty UNVERIFIED — gate before claiming).** Running a non-partitioned e-detector on the per-pair bet increment (U − V) as its observation stream would monitor the *onset* of co-failure drift. Whether a dependence-changepoint monitor of this kind is unclaimed in the literature has not been verified; treat as future work until a citation search clears it.
+
 ## Citations owed — ⟦CITE — needed⟧
 
 *(Do not fabricate. Verify each from primary before this section is load-bearing in
