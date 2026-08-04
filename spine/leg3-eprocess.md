@@ -125,6 +125,16 @@ mean of the marginals, no predictable nuisance — the baseline is a directly ob
 random variable with the correct expectation by construction. This is what closes the
 trap of §2: there is nothing left to mis-estimate.
 
+**The one structural fact that carries the whole guarantee.** The baseline $V$ is an
+*observed product, never an estimate*: $\mathbb{E}[V \mid \mathcal{F}_{k-1}] = a\cdot b$
+holds **exactly** by cross-item independence ($W_i^s \perp\!\!\!\perp W_j^t$ for $s \ne t$),
+for **any** marginals $a, b$ — including drifting ones. Because $a\cdot b$ cancels
+*symbolically* in the martingale identity $\mathbb{E}[e \mid \mathcal{F}_{k-1}] = 1$, no
+marginal probability is ever formed as a number. This single structural fact delivers
+**both** finite-sample validity (no concentration or consistency assumption) **and**
+robustness to drifting marginals — they are one property, not two. Everything below is
+bookkeeping on this one cancellation.
+
 **The bet.** With the observed baseline in hand, wager
 $$
 \boxed{\,e \;=\; 1 + \lambda\,(U - V), \qquad \lambda \in [0,1].\,}
@@ -232,29 +242,42 @@ Because the bias can be *positive*, the slack $\delta_k$ is **not a passive corr
 it must be sized to *dominate the worst-case positive excursion*, not merely to absorb a
 one-signed offset. Set
 $$
-e \;=\; 1 + \lambda\big(U - V - \delta_k\big), \qquad \delta_k = 2\varepsilon \ \ (\text{or } 2\lambda a\varepsilon),
+e \;=\; 1 + \lambda\big(U - V - \delta_k\big), \qquad \boxed{\,\delta_k = 2\varepsilon\,,}
 $$
 subtracting $\delta_k$ from the bet so that $\mathbb{E}[e \mid \mathcal{F}] \le 1$ holds
 conservatively against the worst-case positive drift. Equivalently, pair only items whose
 marginals are *provably* within $\varepsilon$. Either way the supermartingale property is
 restored at a cost in power proportional to $\delta_k$.
 
+**The paper adopts the $a$-free worst-case slack $\delta_k = 2\varepsilon$.** It uses only
+the chosen radius $\varepsilon$ and the worst-case bounds $\lambda, a \le 1$ — no marginal
+appears in it — and *this is exactly why we adopt it*: being marginal-free, it preserves the
+§3 estimation-free guarantee end-to-end. The tighter bound $\delta_k = 2\lambda a\varepsilon$
+is **not adopted**, despite its constant-factor power gain, because it embeds the marginal
+$a$: forming it as a number requires estimating $a$, which reintroduces marginal estimation
+through a side door and sacrifices the exact-baseline property that §3's whole construction
+exists to secure. We trade a constant factor of power for keeping the baseline exactly
+observed. The gain is not worth reopening the §2 trap.
+
 This is a **defensible bound, not a structural hole** — the bias is bounded (by $2\varepsilon$)
 and removable by a slack whose size we can name — but precisely because it is two-sided the
-slack must dominate the positive excursion rather than cancel a known offset. The *constant*
-and the *granularity* remain genuinely open: choosing $\delta_k$ too large throws away power,
-too small voids validity, and the optimal stratification granularity (how finely to
-block the stream so that $\varepsilon$ is small but strata still contain enough items to
-pair) is a design question we have not closed.
+slack must dominate the positive excursion rather than cancel a known offset. With the
+*constant* now committed to the $a$-free $\delta_k = 2\varepsilon$, what remains genuinely
+open is the *granularity*: choosing the block size too coarse makes $\varepsilon$ large and
+throws away power, too fine leaves strata with too few items to pair, and the optimal
+stratification granularity (how finely to block the stream so that $\varepsilon$ is small but
+strata still contain enough items to pair) is a design question we have not closed.
 
-⟦GAP: tighten the slack constant $\delta_k$ and choose the stratification granularity.
-Open sub-questions: (i) is $\delta_k = 2\varepsilon$ tight, or can the factor
-$\lambda a \le 1$ be exploited for a smaller slack (e.g. $\delta_k = 2\lambda a\varepsilon$)
-while still dominating the worst-case positive excursion? (ii) an adaptive stratification
-that estimates $\varepsilon$ per block from data without re-introducing a predictable
-plug-in bias (note the tension: estimating $\varepsilon$ is itself estimation — show it
-does not resurrect the §2 trap); (iii) a power accounting for the $\delta_k$ penalty
-against the $r = 0.4$ operating point.⟧
+⟦GAP: choose the stratification granularity, and clear the adaptive-$\varepsilon$ risk.
+The slack *constant* is settled — the paper commits to the $a$-free $\delta_k = 2\varepsilon$
+and deliberately declines the tighter $\delta_k = 2\lambda a\varepsilon$, which would embed
+the marginal $a$ and reintroduce marginal estimation, forfeiting §3's exact-baseline
+property for a constant-factor gain. Open sub-questions: (i) [FLAGGED OPEN RISK — not
+adopted] an adaptive stratification that estimates $\varepsilon$ per block from data; this
+is *itself estimation*, so before it can be used it must be shown not to resurrect the §2
+plug-in trap — treat as an open risk, never as part of the committed construction; (ii) a
+power accounting for the $\delta_k = 2\varepsilon$ penalty against the $r = 0.4$ operating
+point.⟧
 
 ## 6. The unification: cross-item pairing *is* Barber–Candès–Ramdas conditional validity
 
