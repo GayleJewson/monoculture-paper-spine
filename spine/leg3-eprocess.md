@@ -34,17 +34,24 @@ are added. This is the Kish/Kohli effective-sample-size applied to the failure a
 given a mean pairwise co-failure correlation $\bar\varphi$, the panel's effective size
 deflates as $n_{\mathrm{eff}} = m / \big(1 + (m-1)\bar\varphi\big) \to 1/\bar\varphi$ for
 large $m$ — a $1/\bar\varphi$-type ceiling, not a linear return on membership
-⟦CITE — needed: Kohli (Leg-1 primary); Kish effective sample size⟧. The same
-saturation has been rediscovered from an independent direction: RoPoLL reports a mean
-within-panel co-failure weight $\bar\gamma_W \in [0.45, 0.53]$ and an effective panel
-size that saturates at $N \approx 2$–$3$ ⟦CITE: RoPoLL 2606.30931⟧. Two labs, two
-estimators, one stylized fact. **The collapse is not in dispute.** Leg 1 established it
-on the failure-correlation axis; RoPoLL corroborates it on a co-failure-weight axis.
+⟦CITE — needed: Kohli (Leg-1 primary); Kish effective sample size⟧. Concretely, Kohli
+measures $n_{\mathrm{eff}}$ falling from $\approx 2.18$ to $\approx 1.93$ across judge
+panels ⟦CITE: Kohli 2605.29800⟧: **the collapse of effective panel size is the established
+diagnostic, established by Leg 1.**
+
+⟦GAP for Claudius: the deleted "two labs, one stylized fact" move needs an HONEST second
+independent $n_{\mathrm{eff}}$ landing. Best primary-verified candidate = Shu et al.
+2608.06940, "Blind to the Pivotal Vote": panel $n_{\mathrm{eff}} \approx 2.61$, SAME
+judge-panel domain, restates Kohli's "nine judges $\approx$ two." Second candidate =
+Begin 2606.26583 (DPO $n_{\mathrm{eff}}$ 1.38–2.19) but that is prediction-market
+forecasting, NOT judge panels — domain caveat. The former RoPoLL numbers
+($\bar\gamma_W \in [0.45,0.53]$, $N \approx 2$–$3$) were fabricated — not in the paper,
+traced to an un-verified browse note — and are REMOVED, not replaced. Pick the framing.⟧
 
 What *nobody does* is monitor the collapse as it happens. The prior art is batch. Han's
 de Finetti cascade gives a fixed-sample reliability ceiling ⟦CITE: Han 2607.13918⟧; Li &
 Hai derive a state-dependent copula floor on co-failure, again for a fixed sample
-⟦CITE: Li & Hai 2607.23931⟧; RoPoLL itself is a batch estimator of $\bar\gamma_W$. The
+⟦CITE: Li & Hai 2607.23931⟧. The
 one streaming instrument in the neighborhood — Xie's sequential monitor
 ⟦CITE: Xie 2606.07624⟧ — watches *marginal* scalars, one stream at a time: it can tell
 you that judge $i$'s fail-rate is drifting, but it says nothing about whether $i$ and $j$
@@ -401,7 +408,6 @@ full bibliographic entries.)*
 - ⟦CITE: Barber–Candès–Ramdas–Tibshirani 1903.04684⟧ (conditional coverage / the identity in §6).
 
 **The diagnostic and the batch prior art**
-- ⟦CITE: RoPoLL 2606.30931⟧ ($\bar\gamma_W \in [0.45,0.53]$, $N \approx 2$–$3$ saturation; batch).
 - ⟦CITE: Han 2607.13918⟧ (de Finetti reliability ceiling; batch — the $\Omega_{\mathrm{blind}}$ twin).
 - ⟦CITE: Li & Hai 2607.23931⟧ (state-dependent copula floor; batch).
 - ⟦CITE: Xie 2606.07624⟧ (sequential monitor of *marginal* scalars, one stream at a time).
@@ -415,8 +421,11 @@ full bibliographic entries.)*
 **Portfolio / response-diversity analogue (outside AI)**
 - ⟦CITE⟧ Schindler et al. (2015), response diversity / the portfolio effect in ecology.
 
-⟦GAP: cross-check that every arXiv ID above is verified from primary (RoPoLL 2606.30931,
-Han 2607.13918, Li & Hai 2607.23931, Xie 2606.07624, BCR 1903.04684). RoPoLL, Li & Hai,
-and Xie are cited here from the brief and have NOT yet been Lyra-primary-verified; flag
-them as such until confirmed, exactly as the connective-tissue section flags its own
-convergence-paper IDs.⟧
+⟦GAP: cross-check that every arXiv ID above is verified from primary (Han 2607.13918,
+Li & Hai 2607.23931, Xie 2606.07624, BCR 1903.04684, Kohli 2605.29800). Li & Hai and Xie
+are cited here from the brief and have NOT yet been Lyra-primary-verified; flag them as
+such until confirmed, exactly as the connective-tissue section flags its own
+convergence-paper IDs. (RoPoLL 2606.30931 REMOVED as a co-failure-weight source — its
+$\bar\gamma_W$/$N$ numbers were fabricated in an un-verified browse note; RoPoLL's real
+content is robust geometric-median panel aggregation under contamination, not co-failure
+measurement, and it is not otherwise cited in this section.)⟧
