@@ -197,6 +197,30 @@ same-item statistic. Betting on $U - V$ is betting that the observed pairing bea
 permutation, adjudicated online and at any stopping time rather than against a fixed
 reference distribution.
 
+**Optimality of the form.** The per-pair bet $e_s = 1 + \lambda(U_s - V_s)$ is not merely
+valid — it is optimal in class. Clerico ⟦CITE: 2606.06769⟧ proves a complete-class theorem:
+any e-process for a null defined by *finitely many* conditional-moment constraints is
+dominated, at every stage, by a predictable product of *affine* one-step e-variables. Our
+$K$-stratum co-failure null is exactly such a finite conditional-constraint null (the
+$\mathcal{F}_{k-1}$-conditional matched-marginal moment form), and our bet is the affine
+one-step e-variable with $\Phi = U - V$, support $S = [-2\varepsilon, 2\varepsilon]$, and
+$\sigma(\lambda) = 2\varepsilon|\lambda|$ for $\lambda \in [0,1]$. Hence the construction is
+complete-class optimal for the $K$-stratum null we test.
+
+Three scope notes keep this honest:
+
+(i) *Horizon-clean.* The domination is stagewise, not asymptotic — it carries no
+infinite-horizon assumption. The $\infty$-stages caveat belongs to the *size* question
+(log-optimal Kelly tuning), which we decline; see §5.
+
+(ii) *Scope, not suboptimality.* Optimality is for the finite $K$-stratum null actually
+tested; the continuous-difficulty ideal is a refinement of the *null* — a discretization
+away — not a stronger optimality we forgo.
+
+(iii) *One-sided.* We verify admissibility for $\lambda \in [0,1]$; whether the dominating
+e-variable ever requires $\lambda < 0$ (a short position against co-failure) is open, so
+we claim optimality for the $\lambda \ge 0$ family and flag the two-sided extension.
+
 ## 4. Where this sits relative to $\Omega_{\mathrm{blind}}$ and Leg 2
 
 The $\Omega_{\mathrm{blind}}$ subsection uses Han's batch de Finetti ceiling as the
@@ -252,7 +276,28 @@ restored at a cost in power proportional to $\delta_k$.
 **The paper adopts the $a$-free worst-case slack $\delta_k = 2\varepsilon$.** It uses only
 the chosen radius $\varepsilon$ and the worst-case bounds $\lambda, a \le 1$ — no marginal
 appears in it — and *this is exactly why we adopt it*: being marginal-free, it preserves the
-§3 estimation-free guarantee end-to-end. The tighter bound $\delta_k = 2\lambda a\varepsilon$
+§3 estimation-free guarantee end-to-end.
+
+*Rider — what $\delta_k = 2\varepsilon$ does NOT give.* The size of $\delta_k$ is the
+worst-case margins-free slack derived above; it does not come from, and is not log-optimal in
+the sense of, Brannath–Fischer ⟦CITE: 2606.00878⟧. That paper is an equivalence result — it
+characterises the GRO (Growth-Rate Optimal) e-process class — but supplies no constructive
+Kelly fraction, and its GRO log-optimality explicitly assumes $\infty$ stages, which is the
+wrong regime for few strata. $\delta_k = 2\varepsilon$ stands as a robust, exact, margins-free
+commitment; any GRO refinement (Grünwald–de Heide–Koolen) would require a large-strata
+assumption and is not adopted here.
+
+*Honesty riders on the §3 optimality claim.* The complete-class optimality established in §3
+is precise but bounded in scope, and two open directions are worth naming explicitly here.
+First (§3, scope note (ii)): the optimality claim is for the finite $K$-stratum null we
+actually test; the continuous-difficulty ideal is a discretization refinement of the *null
+itself* — a better stratification would shrink $\varepsilon$, narrowing $S$, but that is a
+refinement of what is being tested, not a failure of optimality within the stated null.
+Second (§3, scope note (iii)): the complete-class statement is for the $\lambda \ge 0$
+family; whether the dominating e-variable ever requires $\lambda < 0$ remains open, and the
+two-sided extension is not claimed.
+
+The tighter bound $\delta_k = 2\lambda a\varepsilon$
 is **not adopted**, despite its constant-factor power gain, because it embeds the marginal
 $a$: forming it as a number requires estimating $a$, which reintroduces marginal estimation
 through a side door and sacrifices the exact-baseline property that §3's whole construction
@@ -311,6 +356,18 @@ Saha & Ramdas, "Non-partitioned e-detectors for nonparametric sequential change 
 - The exact all-start detector is **O(t) memory / quadratic total cost** (constant per-start cost needs a fixed portfolio) — it is *not* the O(1) construction (that is the Rao–Blackwellized streaming e-process, 2607.21958; do not conflate).
 
 **Candidate extension (novelty UNVERIFIED — gate before claiming).** Running a non-partitioned e-detector on the per-pair bet increment (U − V) as its observation stream would monitor the *onset* of co-failure drift. Whether a dependence-changepoint monitor of this kind is unclaimed in the literature has not been verified; treat as future work until a citation search clears it.
+
+## 7.1. Closest competitors: conditional-independence co-failure tests
+
+The table below positions Leg-3 against the two methods with the tightest thematic overlap.
+
+| Method | Estimand | Anytime-valid (Ville)? | Marginals | Cross-item pairing | Drift-robust? |
+|---|---|---|---|---|---|
+| SKCI — He & Sutherland ⟦CITE: 2606.18993⟧ | conditional independence | yes | CME estimate | no | — |
+| Kuai ⟦CITE: 2604.07650⟧ | co-failure given difficulty | **no** — batch (permutation + MC), no Ville inequality | logistic fit $p_m(d)$ | no | no |
+| **Ours (JUDGe Leg-3)** | co-failure given difficulty | yes | margins-free (matched via pairing) | yes ($V = W_i^s \cdot W_j^t$) | yes |
+
+Kuai ⟦CITE: 2604.07650⟧ is our closest competitor — the same conditional-independence-given-difficulty co-failure null on real panels (18 models, MMLU-Pro) — but it is a *batch* procedure (permutation + Monte-Carlo), **with no Ville inequality and hence no anytime-valid guarantee**. Its "Cumulative Information Gain" is a sum over a fixed sample, not a sequential statistic. SKCI (He & Sutherland, ⟦CITE: 2606.18993⟧) is anytime-valid but tests conditional independence via an estimated conditional-mean embedding, where our baseline is margins-free by construction.
 
 ## Citations owed — ⟦CITE — needed⟧
 
