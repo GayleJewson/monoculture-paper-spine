@@ -394,7 +394,7 @@ full bibliographic entries.)*
 **Betting / e-values / game-theoretic probability**
 - ⟦CITE⟧ Shafer, "Testing by betting" (JRSS-A, 2021).
 - ⟦CITE⟧ Shafer & Vovk, *Game-Theoretic Foundations for Probability and Finance* / e-values (2019).
-- ⟦CITE⟧ Robbins mixture — the mixture-martingale construction ⟦needed: canonical reference for the $\lambda$-mixture; likely Robbins 1970 / Howard–Ramdas–McAuliffe–Sekhon time-uniform bounds — verify⟧.
+- ⟦CITE⟧ Robbins mixture — the mixture-martingale construction ⟦needed: canonical reference for the $\lambda$-mixture; likely Robbins 1970 / Howard–Ramdas–McAuliffe–Sekhon time-uniform bounds 1808.03204⟧.
 - ⟦CITE⟧ Ville's inequality — ⟦needed: primary or a standard game-theoretic-probability restatement⟧.
 
 **Conditional validity**
