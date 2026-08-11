@@ -205,7 +205,10 @@ $K$-stratum co-failure null is exactly such a finite conditional-constraint null
 $\mathcal{F}_{k-1}$-conditional matched-marginal moment form), and our bet is the affine
 one-step e-variable with $\Phi = U - V$, support $S = [-2\varepsilon, 2\varepsilon]$, and
 $\sigma(\lambda) = 2\varepsilon|\lambda|$ for $\lambda \in [0,1]$. Hence the construction is
-complete-class optimal for the $K$-stratum null we test.
+complete-class optimal for the $K$-stratum null we test. With $\delta_k = 2\varepsilon$, our
+drift bet coincides exactly with Clerico's canonical affine e-variable $e_\lambda = 1 +
+\lambda\Phi - \sigma_{\Phi,S}(\lambda)$: the slack $\delta_k = 2\varepsilon$ is the support
+function $\sigma_{\Phi,S}$ itself, not an ad-hoc robustness margin.
 
 Three scope notes keep this honest:
 
@@ -217,9 +220,14 @@ infinite-horizon assumption. The $\infty$-stages caveat belongs to the *size* qu
 tested; the continuous-difficulty ideal is a refinement of the *null* — a discretization
 away — not a stronger optimality we forgo.
 
-(iii) *One-sided.* We verify admissibility for $\lambda \in [0,1]$; whether the dominating
-e-variable ever requires $\lambda < 0$ (a short position against co-failure) is open, so
-we claim optimality for the $\lambda \ge 0$ family and flag the two-sided extension.
+(iii) *One-sided by design, not by restriction.* Clerico's admissible class $\Lambda_{\Phi,S}$
+places no sign constraint on $\lambda$; for our two-sided drift null ($S = [-2\varepsilon,
+2\varepsilon]$) it is the symmetric set $\{\lambda : 1 + \lambda(U - V) \ge 2\varepsilon|\lambda|\}$,
+which contains negative $\lambda$. We use only $\lambda \ge 0$ because our *alternative* is
+one-sided (excess co-failure): a negative-$\lambda$ bet is admissible but power-optimal
+against the benign anti-co-failure alternative we do not monitor, so excluding it costs no
+power against excess co-failure. On the $\lambda \ge 0$ side, admissibility gives the exact
+range $\lambda \in [0, 1/(1+2\varepsilon)]$.
 
 ## 4. Where this sits relative to $\Omega_{\mathrm{blind}}$ and Leg 2
 
@@ -272,6 +280,14 @@ subtracting $\delta_k$ from the bet so that $\mathbb{E}[e \mid \mathcal{F}] \le 
 conservatively against the worst-case positive drift. Equivalently, pair only items whose
 marginals are *provably* within $\varepsilon$. Either way the supermartingale property is
 restored at a cost in power proportional to $\delta_k$.
+
+The admissible range for the drift bet is $\lambda \in [0, 1/(1+2\varepsilon)]$, not the
+$[0,1]$ of the exact-null bet: at $\lambda = 1$ the outcome $U = 0$, $V = 1$ gives
+$e = 1 - (1 + 2\varepsilon) = -2\varepsilon < 0$, breaking nonnegativity. This bound is
+exactly Clerico's admissibility condition $1 + \lambda(U - V) \ge \sigma_{\Phi,S}(\lambda)
+= 2\varepsilon|\lambda|$ for the interval null $S = [-2\varepsilon, 2\varepsilon]$, solved at
+the worst case $U - V = -1$. For small $\varepsilon$ it shaves only an $O(\varepsilon)$
+sliver off the top of the range ($1/(1+2\varepsilon) \approx 1 - 2\varepsilon$).
 
 **The paper adopts the $a$-free worst-case slack $\delta_k = 2\varepsilon$.** It uses only
 the chosen radius $\varepsilon$ and the worst-case bounds $\lambda, a \le 1$ — no marginal
