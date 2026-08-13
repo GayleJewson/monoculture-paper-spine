@@ -50,7 +50,7 @@ traced to an un-verified browse note — and are REMOVED, not replaced. Pick the
 
 What *nobody does* is monitor the collapse as it happens. The prior art is batch. Han's
 de Finetti cascade gives a fixed-sample reliability ceiling ⟦CITE: Han 2607.13918⟧; Li &
-Hai derive a state-dependent copula floor on co-failure, again for a fixed sample
+Hai derive a state-dependent copula floor on co-failure, batch, via a train/test (odd/even index) split
 ⟦CITE: Li & Hai 2607.23931⟧. The
 one streaming instrument in the neighborhood — Xie's sequential monitor
 ⟦CITE: Xie 2606.07624⟧ — watches *marginal* scalars, one stream at a time: it can tell
@@ -411,7 +411,7 @@ full bibliographic entries.)*
 - ⟦CITE: Han 2607.13918⟧ (de Finetti reliability ceiling; batch — the $\Omega_{\mathrm{blind}}$ twin).
 - ⟦CITE: Li & Hai 2607.23931⟧ (state-dependent copula floor; batch).
 - ⟦CITE: Xie 2606.07624⟧ (sequential monitor of *marginal* scalars, one stream at a time).
-- ⟦CITE⟧ Kohli (Leg-1 primary; $n_{\mathrm{eff}} \approx 2$ on $\bar\varphi$) — ⟦needed: full ref⟧.
+- ⟦CITE: Kohli 2605.29800⟧ ("Nine Judges, Two Effective Votes"; Leg-1 primary; $n_{\mathrm{eff}} \approx 2$ on $\bar\varphi$).
 
 **N-version / common-cause failure lineage (the reliability-engineering roots of co-failure)**
 - ⟦CITE⟧ Knight & Leveson (1986), "An experimental evaluation of the assumption of independence in multiversion programming."
