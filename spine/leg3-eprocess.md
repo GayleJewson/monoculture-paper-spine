@@ -106,6 +106,17 @@ mis-estimate.
 
 ## 3. The discharge: cross-item pairing gives an *observed* baseline
 
+The claim of this section is that the cross-item pairing bet is not an ad-hoc device but
+the **canonical, complete-class-optimal e-variable** for the $K$-stratum co-failure null
+⟦CITE: 2606.06769⟧. The contribution is the *construction*: cross-item pairing ($s \ne t$)
+yields a **margins-free observed baseline** $V$ with $\mathbb{E}[V] = a\cdot b$ *without any
+estimation* — precisely the object that SKCI, Kuai, and every other monitor in the
+neighborhood must instead fit or estimate. Clerico's complete-class theorem then enters only
+as an **optimality certificate**: it tells us this natural, estimation-free object is also
+optimal-in-class, and nothing more. We build $V$ (the margins-free baseline), read off
+$(\Phi, S, \sigma)$, and identify the result as Clerico's canonical affine member; optimality
+is then immediate.
+
 Work within a *stratum* — a block of items on which both marginals are approximately
 constant, $p_i \approx a$ and $p_j \approx b$. (Section 5 makes "approximately" precise
 and pays for it.) Pick two distinct items $s \ne t$ in the stratum and form two
@@ -142,14 +153,28 @@ marginal probability is ever formed as a number. This single structural fact del
 robustness to drifting marginals — they are one property, not two. Everything below is
 bookkeeping on this one cancellation.
 
-**The bet.** With the observed baseline in hand, wager
+**The bet — assembling the canonical member.** With the observed baseline in hand, wager
 $$
 \boxed{\,e \;=\; 1 + \lambda\,(U - V), \qquad \lambda \in [0,1].\,}
 $$
+This is exactly the shape of Clerico's canonical affine one-step e-variable, and the data
+it needs are now all in hand: the score is $\Phi = U - V$, its support is
+$S = [-2\varepsilon, 2\varepsilon]$ (from the two-sided drift range of §5), and its support
+function is $\sigma(\lambda) = 2\varepsilon|\lambda|$. Reading off Clerico's admissibility
+set $\Lambda_{\Phi,S}$ from these data gives **both** admissible ranges at once. For the
+**exact-null bet** ($\delta_k = 0$, the stratum-constant case) the only binding constraint is
+nonnegativity of $e$, which holds on $\lambda \in [0,1]$. For the **drift bet**
+($\delta_k = 2\varepsilon$, §5) admissibility is
+$1 + \lambda(U - V) \ge \sigma_{\Phi,S}(\lambda) = 2\varepsilon|\lambda|$, solved at the worst
+case $U - V = -1$, which gives $\lambda \in [0, 1/(1+2\varepsilon)]$.
 
 *Nonnegativity.* $U, V \in \{0,1\}$, so $U - V \in \{-1, 0, 1\}$, hence
 $e \in [1-\lambda,\, 1+\lambda] \subseteq [0, 2]$ for $\lambda \le 1$. In particular
-$e \ge 0$, so the running product is a genuine nonnegative wealth process. ✓
+$e \ge 0$, so the running product is a genuine nonnegative wealth process. ✓ The drift-bet
+range is strictly tighter because the subtracted slack eats into the margin: at $\lambda = 1$
+the outcome $U = 0, V = 1$ gives $e = 1 - (1 + 2\varepsilon) = -2\varepsilon < 0$, so
+$\lambda = 1$ is inadmissible under drift and the range shrinks to
+$[0, 1/(1+2\varepsilon)]$ as computed above.
 
 *Validity under $H_0$.* Within-item independence gives $\mathbb{E}[U \mid \mathcal{F}]
 = a b$, and the cross-item argument gives $\mathbb{E}[V \mid \mathcal{F}] = a b$. The two
@@ -204,18 +229,16 @@ same-item statistic. Betting on $U - V$ is betting that the observed pairing bea
 permutation, adjudicated online and at any stopping time rather than against a fixed
 reference distribution.
 
-**Optimality of the form.** The per-pair bet $e_s = 1 + \lambda(U_s - V_s)$ is not merely
-valid — it is optimal in class. Clerico ⟦CITE: 2606.06769⟧ proves a complete-class theorem:
-any e-process for a null defined by *finitely many* conditional-moment constraints is
-dominated, at every stage, by a predictable product of *affine* one-step e-variables. Our
-$K$-stratum co-failure null is exactly such a finite conditional-constraint null (the
-$\mathcal{F}_{k-1}$-conditional matched-marginal moment form), and our bet is the affine
-one-step e-variable with $\Phi = U - V$, support $S = [-2\varepsilon, 2\varepsilon]$, and
-$\sigma(\lambda) = 2\varepsilon|\lambda|$ for $\lambda \in [0,1]$. Hence the construction is
-complete-class optimal for the $K$-stratum null we test. With $\delta_k = 2\varepsilon$, our
-drift bet coincides exactly with Clerico's canonical affine e-variable $e_\lambda = 1 +
-\lambda\Phi - \sigma_{\Phi,S}(\lambda)$: the slack $\delta_k = 2\varepsilon$ is the support
-function $\sigma_{\Phi,S}$ itself, not an ad-hoc robustness margin.
+**Optimality of the form.** We have now assembled exactly Clerico's canonical affine member
+— $\Phi = U - V$, support $S = [-2\varepsilon, 2\varepsilon]$, support function
+$\sigma(\lambda) = 2\varepsilon|\lambda|$ — and its complete-class theorem ⟦CITE: 2606.06769⟧
+therefore certifies the construction as optimal-in-class for the $K$-stratum null we test:
+any e-process for a null defined by finitely many conditional-moment constraints is
+dominated, at every stage, by a predictable product of affine one-step e-variables, and ours
+*is* that dominating affine member. The drift bet coincides exactly with Clerico's canonical
+affine e-variable $e_\lambda = 1 + \lambda\Phi - \sigma_{\Phi,S}(\lambda)$: the slack
+$\delta_k = 2\varepsilon$ *is* the support function $\sigma_{\Phi,S}$ itself, not an ad-hoc
+robustness margin.
 
 Three scope notes keep this honest:
 
@@ -233,8 +256,8 @@ places no sign constraint on $\lambda$; for our two-sided drift null ($S = [-2\v
 which contains negative $\lambda$. We use only $\lambda \ge 0$ because our *alternative* is
 one-sided (excess co-failure): a negative-$\lambda$ bet is admissible but power-optimal
 against the benign anti-co-failure alternative we do not monitor, so excluding it costs no
-power against excess co-failure. On the $\lambda \ge 0$ side, admissibility gives the exact
-range $\lambda \in [0, 1/(1+2\varepsilon)]$.
+power against excess co-failure. On the $\lambda \ge 0$ side, admissibility gives the
+admissible range computed above.
 
 ## 4. Where this sits relative to $\Omega_{\mathrm{blind}}$ and Leg 2
 
@@ -288,13 +311,10 @@ conservatively against the worst-case positive drift. Equivalently, pair only it
 marginals are *provably* within $\varepsilon$. Either way the supermartingale property is
 restored at a cost in power proportional to $\delta_k$.
 
-The admissible range for the drift bet is $\lambda \in [0, 1/(1+2\varepsilon)]$, not the
-$[0,1]$ of the exact-null bet: at $\lambda = 1$ the outcome $U = 0$, $V = 1$ gives
-$e = 1 - (1 + 2\varepsilon) = -2\varepsilon < 0$, breaking nonnegativity. This bound is
-exactly Clerico's admissibility condition $1 + \lambda(U - V) \ge \sigma_{\Phi,S}(\lambda)
-= 2\varepsilon|\lambda|$ for the interval null $S = [-2\varepsilon, 2\varepsilon]$, solved at
-the worst case $U - V = -1$. For small $\varepsilon$ it shaves only an $O(\varepsilon)$
-sliver off the top of the range ($1/(1+2\varepsilon) \approx 1 - 2\varepsilon$).
+The admissible range for the drift bet is $\lambda \in [0, 1/(1+2\varepsilon)]$ — the range
+derived in §3 from Clerico's admissibility set — not the $[0,1]$ of the exact-null bet. For
+small $\varepsilon$ it shaves only an $O(\varepsilon)$ sliver off the top of the range
+($1/(1+2\varepsilon) \approx 1 - 2\varepsilon$).
 
 **The paper adopts the $a$-free worst-case slack $\delta_k = 2\varepsilon$.** It uses only
 the chosen radius $\varepsilon$ and the worst-case bounds $\lambda, a \le 1$ — no marginal
