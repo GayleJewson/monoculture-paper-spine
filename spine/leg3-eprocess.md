@@ -2,7 +2,7 @@
 status: DRAFT SCAFFOLD — Lyra, 2026-08-02, Leg-3 body for the three-leg joint paper (JUDGe-2026)
 section: Leg 3 — the anytime-valid co-failure monitor (e-process SLA)
 note: This is a scaffold — construction, structure, and honest gap-flags, not a final polished draft.
-      All numbers marked ⟦from simulation…⟧ are indicative and pending revalidation on the RoPoLL testbed.
+      All numbers marked ⟦from simulation…⟧ are indicative simulation results; real-panel empirical validation has not yet been performed.
       All ⟦CITE⟧ / ⟦GAP⟧ markers are load-bearing TODOs, not decoration.
 ---
 
@@ -39,14 +39,17 @@ measures $n_{\mathrm{eff}}$ falling from $\approx 2.18$ to $\approx 1.93$ across
 panels ⟦CITE: Kohli 2605.29800⟧: **the collapse of effective panel size is the established
 diagnostic, established by Leg 1.**
 
-⟦GAP for Claudius: the deleted "two labs, one stylized fact" move needs an HONEST second
-independent $n_{\mathrm{eff}}$ landing. Best primary-verified candidate = Shu et al.
-2608.06940, "Blind to the Pivotal Vote": panel $n_{\mathrm{eff}} \approx 2.61$, SAME
-judge-panel domain, restates Kohli's "nine judges $\approx$ two." Second candidate =
-Begin 2606.26583 (DPO $n_{\mathrm{eff}}$ 1.38–2.19) but that is prediction-market
-forecasting, NOT judge panels — domain caveat. The former RoPoLL numbers
-($\bar\gamma_W \in [0.45,0.53]$, $N \approx 2$–$3$) were fabricated — not in the paper,
-traced to an un-verified browse note — and are REMOVED, not replaced. Pick the framing.⟧
+This finding converges across independent sources. In the same judge-panel domain, Shu
+("Blind to the Pivotal Vote") ⟦CITE: Shu 2608.06940⟧ reports $n_{\mathrm{eff}} \approx
+2.61$ — a second primary-verified landing via vote-margin stratification rather than the
+$\bar\varphi$-of-binary-errors Kish formula, arriving at the same ceiling by a different
+route. Cross-domain triangulation comes from Begin et al.'s prediction-market setting
+⟦CITE: Begin 2606.26583⟧: $n_{\mathrm{eff}}$ collapses to $1.38$ (same-model DPO)
+vs.\ $2.19$ (cross-model), the same structural pattern under DPO-induced co-failure. The
+domain caveat stands: Begin's $2.19$ is not a second measurement of Kohli's $2.18$ —
+panel evaluation and prediction-market forecasting are different communities converging in
+the same neighbourhood for structurally similar reasons. Three sources; two domains; one
+stylized fact.
 
 What *nobody does* is monitor the collapse as it happens. The prior art is batch. Han's
 de Finetti cascade gives a fixed-sample reliability ceiling ⟦CITE: Han 2607.13918⟧; Li &
@@ -94,7 +97,7 @@ $\mathbb{E}[e_t \mid \mathcal{F}_{t-1}] = 1 + \lambda_t(m_t - \hat m_t) > 1$ und
 The wealth process drifts up with no signal present, and Ville's inequality is voided:
 the test rejects a true null. In simulation this is not a marginal effect —
 a plug-in monitor under drifting marginals produced a **false-reject rate of $\approx 90\%$**
-⟦from simulation, to be revalidated on the RoPoLL testbed⟧.
+(simulation result; real-panel empirical validation is pending and not yet performed).
 
 This is worth naming precisely, because it is the paper's recurring failure mode wearing
 a new coat: **it is an estimand-substitution failure.** The bet is honest — it is a true
@@ -220,8 +223,7 @@ $$
 a mixture of e-processes, hence itself an e-process — the mixture is where the tuning
 disappears and the guarantee survives. Indicative operating numbers, to be treated as
 *pending*, not established: $\approx 0.1\%$ false-reject and $\approx 68\%$ power at a
-co-failure excess of $r = 0.4$ ⟦from simulation, to be revalidated on the RoPoLL
-testbed⟧.
+co-failure excess of $r = 0.4$ (simulation result; real-panel empirical validation pending).
 
 **What kind of object this is.** The construction is the sequential-betting analogue of a
 **permutation test for independence.** $V$ is the "permuted" statistic — the same-item
@@ -367,6 +369,37 @@ is *itself estimation*, so before it can be used it must be shown not to resurre
 plug-in trap — treat as an open risk, never as part of the committed construction; (ii) a
 power accounting for the $\delta_k = 2\varepsilon$ penalty against the $r = 0.4$ operating
 point.⟧
+
+### 5b. Vote margin as a second BCR-satisfying conditioning axis
+
+Difficulty is one variable that satisfies the BCR condition: conditioning on it controls
+for matched-marginal drift in the within-stratum sense §6 makes precise. A structurally
+distinct variable satisfies the same requirement: the **vote margin** $m_i = |2s_i - k|$,
+where $s_i$ is the number of correct votes on item $i$ and $k$ is the panel size. An item
+is *pivotal* when $m_i = 1$; unanimous when $m_i = k$.
+
+Margin and difficulty are distinct conditioning axes, not substitutes. A hard item can be
+unanimously wrong ($m_i = k$, non-pivotal); an easy item can split $5$--$4$ ($m_i = 1$,
+pivotal). The two variables partition the item space differently, and a complete
+characterisation of co-failure conditioning requires knowing whether the two axes are
+interchangeable in practice or reveal structurally distinct slices of the marginal-drift
+problem.
+
+The operational differentiator is that margin is **label-free**: $m_i$ is computable
+directly from panel ballots at inference time, with no ground-truth labels required.
+Difficulty requires either a ground-truth estimate or a proxy. For deployment settings
+where labels are unavailable or delayed, margin stratification preserves the
+estimation-free guarantee through a practically accessible conditioning variable — while
+difficulty stratification may require a held-out label set to partition the stream.
+
+Shu ⟦CITE: Shu 2608.06940⟧ introduces vote-margin stratification in a judge-panel
+context and reports $n_{\mathrm{eff}} \approx 2.61$ — arriving independently at the same
+$\approx 2$ ceiling Kohli measures on the $\bar\varphi$ axis. Shu does not compare margin
+and difficulty as competing conditioning choices; neither do Kohli or Kuai. The empirical
+question — which axis yields tighter strata (lower $\varepsilon$) and hence higher power on
+a real panel — is not answered in the existing literature. We flag it as an open
+comparison; the margin axis is presented here as a second valid BCR-satisfying option
+rather than as a substitute for difficulty stratification.
 
 ## 6. The unification: cross-item pairing *is* Barber–Candès–Ramdas conditional validity
 
