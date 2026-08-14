@@ -159,7 +159,7 @@ $$
 $$
 This is exactly the shape of Clerico's canonical affine one-step e-variable, and the data
 it needs are now all in hand: the score is $\Phi = U - V$, its support is
-$S = [-2\varepsilon, 2\varepsilon]$ (from the two-sided drift range of §5), and its support
+$S = [-2\varepsilon, 2\varepsilon]$, whose half-width is the drift slack $\delta_k = 2\varepsilon$ that §5 derives from the within-stratum marginal radius $\varepsilon$, and its support
 function is $\sigma(\lambda) = 2\varepsilon|\lambda|$. Reading off Clerico's admissibility
 set $\Lambda_{\Phi,S}$ from these data gives **both** admissible ranges at once. For the
 **exact-null bet** ($\delta_k = 0$, the stratum-constant case) the only binding constraint is
@@ -171,10 +171,11 @@ case $U - V = -1$, which gives $\lambda \in [0, 1/(1+2\varepsilon)]$.
 *Nonnegativity.* $U, V \in \{0,1\}$, so $U - V \in \{-1, 0, 1\}$, hence
 $e \in [1-\lambda,\, 1+\lambda] \subseteq [0, 2]$ for $\lambda \le 1$. In particular
 $e \ge 0$, so the running product is a genuine nonnegative wealth process. ✓ The drift-bet
-range is strictly tighter because the subtracted slack eats into the margin: at $\lambda = 1$
+range is strictly tighter because the subtracted slack eats into the margin. By a second,
+direct route: at $\lambda = 1$
 the outcome $U = 0, V = 1$ gives $e = 1 - (1 + 2\varepsilon) = -2\varepsilon < 0$, so
 $\lambda = 1$ is inadmissible under drift and the range shrinks to
-$[0, 1/(1+2\varepsilon)]$ as computed above.
+$[0, 1/(1+2\varepsilon)]$ — matching the admissibility computation above.
 
 *Validity under $H_0$.* Within-item independence gives $\mathbb{E}[U \mid \mathcal{F}]
 = a b$, and the cross-item argument gives $\mathbb{E}[V \mid \mathcal{F}] = a b$. The two
@@ -201,7 +202,8 @@ under the following four conditions, stated explicitly because each is load-bear
    wagers on breaks the martingale property.
 2. **Bounded bet $\lambda_k \in [0,1]$.** This is load-bearing for nonnegativity $e_k \ge 0$:
    if $\lambda_k > 1$ then the outcome $U = 0, V = 1$ gives $e_k = 1 - \lambda_k < 0$, the
-   wealth process can go negative, and Ville's guarantee breaks.
+   wealth process can go negative, and Ville's guarantee breaks. (Under the drift null,
+   further restricted to $\lambda \in [0, 1/(1+2\varepsilon)]$; see above.)
 3. **Within-item null per increment.** The within-item independence null
    $\mathbb{E}[U_k \mid \mathcal{F}_{k-1}] = a b$ holds at each increment $k$.
 4. **Disjoint pairs and global A2.** The item-pairs across increments are disjoint /
