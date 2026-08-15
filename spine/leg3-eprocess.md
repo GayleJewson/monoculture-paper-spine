@@ -327,7 +327,7 @@ appears in it — and *this is exactly why we adopt it*: being marginal-free, it
 
 *Rider — what $\delta_k = 2\varepsilon$ does NOT give.* The size of $\delta_k$ is the
 worst-case margins-free slack derived above; it does not come from, and is not log-optimal in
-the sense of the GRO (Growth-Rate Optimal) e-process class characterised by ⟦CITE: Grünwald–de Heide–Koolen, "Safe Testing" / GROW — verify arXiv ID before filling⟧. The GRO framework supplies no constructive
+the sense of the GRO (Growth-Rate Optimal) e-process class characterised by ⟦CITE: Grünwald, de Heide & Koolen, "Safe Testing", JRSS-B 86(5) pp. 1091–1128 (2024), arXiv:1906.07801 — GRO defined §2.1, GROW defined §3⟧. The GRO framework supplies no constructive
 Kelly fraction for few-strata settings: its log-optimality explicitly assumes $\infty$ stages, which is the
 wrong regime here, as Brannath–Fischer ⟦CITE: 2606.00878⟧ (an equivalence result between confirmatory adaptive designs and anytime-valid sequential e-value tests) makes clear in its background gloss on log-optimality. $\delta_k = 2\varepsilon$ stands as a robust, exact, margins-free
 commitment; any GRO refinement would require a large-strata
