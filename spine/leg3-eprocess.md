@@ -424,6 +424,21 @@ side, and any attempt to drop it fails on both axes at once. That is why §5's s
 honest open piece and not a removable inconvenience: BCR tells us the conditioning cannot
 be conditioned away for free.
 
+The same identity applies to **any conditioning variable that achieves within-stratum
+marginal approximate constancy.** Section 5b establishes that vote margin is such a
+variable: it partitions the item stream by directly observable ballot counts, with no
+ground-truth labels required. The BCR requirement is satisfied for the same structural
+reason — margin strata impose within-stratum marginal approximate constancy on the same
+$(p_i, p_j)$ plane as difficulty strata — and $V$ is an observable baseline for the same
+structural reason. Difficulty and vote margin are therefore **two orthogonal
+BCR-satisfying conditioning axes**: they partition the item space differently (a hard item
+can be unanimously wrong; an easy item can split the panel), and which achieves tighter
+strata ($\varepsilon$ closer to zero) on a real judge panel is the open empirical
+comparison of §5b. BCR does not adjudicate between them; it confirms that both are valid
+conditioning choices and that any stratification scheme that fails to achieve within-stratum
+marginal approximate constancy fails on both the observable-baseline and conditional-validity
+axes simultaneously.
+
 ## 7. Related work: non-partitioned changepoint detection (Saha–Ramdas 2607.28322)
 
 Saha & Ramdas, "Non-partitioned e-detectors for nonparametric sequential change detection" (arXiv:2607.28322, 30 Jul 2026), build an anytime-valid e-detector for the **single-stream** setting where *both* the pre- and post-change distributions are unknown and share a composite class (no pre-specified P₀/P₁ partition). Primitives are REGROW e-processes aggregated Shiryaev–Roberts-style; a "countable local REGROW witness basis" (their Def. 6.8) supplies the regularity that replaces global weak-compactness. Weights choose ARL vs. PFA control.
@@ -445,6 +460,10 @@ The table below positions Leg-3 against the two methods with the tightest themat
 | **Ours (JUDGe Leg-3)** | co-failure given difficulty | yes | margins-free (matched via pairing) | yes ($V = W_i^s \cdot W_j^t$) | yes |
 
 Kuai ⟦CITE: 2604.07650⟧ is our closest competitor — the same conditional-independence-given-difficulty co-failure null on real panels (18 models, MMLU-Pro) — but it is a *batch* procedure (permutation + Monte-Carlo), **with no Ville inequality and hence no anytime-valid guarantee**. Its "Cumulative Information Gain" is a sum over a fixed sample, not a sequential statistic. SKCI (He & Sutherland, ⟦CITE: 2606.18993⟧) is anytime-valid but tests conditional independence via an estimated conditional-mean embedding, where our baseline is margins-free by construction.
+
+**Bhardwaj 2608.12895 — closest to the joint machine, coarser grain.** "Agent Behavioral Contracts II" ⟦CITE: 2608.12895⟧ is the first entrant we have found that carries *both* pieces of our machinery simultaneously: an assumption-free LP certificate over the joint failure distribution on $\{0,1\}^m$ (Thm 5.2, moment-box via Bonferroni–Clopper–Pearson) and an anytime-valid e-process via testing-by-betting (§7, Thm 7.1, recovers SPRT at the optimal bet). No other single paper does both. Three distinguishers hold cleanly against the table axes. **Granularity**: their atom is a "mission" — a whole multi-turn trajectory collapsed to one hard per-agent verdict — coarser than our per-item cross-item pairing $V = W_i^s \cdot W_j^t$ ($s \ne t$) with margins-free $\mathbb{E}[V] = a \cdot b$. **Stationarity**: both their LP and their e-process assume i.i.d./stationary missions; drift is a separate compliance monitor, not integrated into the co-failure certificate. **Margins**: their LP fits marginals via a Clopper–Pearson moment box, where ours is margins-free by construction. A fourth point worth one citation: Bhardwaj (§8) prove internally that fitting a *parametric* dependence model is strictly worse — a bootstrap bound on a fitted functional loses coverage as $n \to \infty$ (identification gap $O(1)$ versus bootstrap haircut $O(n^{-1/2})$), so "more data makes such a certificate worse, with no visible symptom." This is an independent argument, from within their own paper, for the assumption-free posture §3 takes.
+
+⚠ *Do not chain $\varphi = 0.916$ to Kohli/Kim per-item $\bar\varphi$*: their headline correlation is mission-level (one verdict per trajectory). Same substitution-class trap as the NVP z-score; do not use it as a second measurement of Kohli's per-item $n_{\mathrm{eff}}$.
 
 ## Citations owed — ⟦CITE — needed⟧
 
